@@ -25,7 +25,7 @@
 
 using System;
 
-namespace Pulsar
+namespace Pulsar.Content
 {
 	/// <summary>
 	/// Exception used to report errors from the ContentManager method. 
