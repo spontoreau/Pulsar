@@ -38,17 +38,17 @@ namespace Pulsar
 		/// <summary>
 		/// Default Window VideoMode
 		/// </summary>
-		private static VideoMode DEFAULT_WINDOW_VIDEO_MODE = new VideoMode(800, 600, 32);
+		private static readonly VideoMode DefaultWindowVideoMode = new VideoMode(800, 600, 32);
 
 		/// <summary>
 		/// Default Window Title
 		/// </summary>
-		private static string DEFAULT_WINDOW_TITLE = Assembly.GetExecutingAssembly().GetName().Name;
+		private static readonly string DefaultWindowTitle = Assembly.GetExecutingAssembly().GetName().Name;
 
 		/// <summary>
 		/// Default Window Styles
 		/// </summary>
-		private const Styles DEFAULT_WINDOW_STYLE = Styles.Default;
+		private const Styles DefaultWindowStyle = Styles.Default;
 
 		/// <summary>
 		/// Raised when a WindowContext start to create the RenderWindow.
@@ -75,7 +75,7 @@ namespace Pulsar
 		/// </summary>
 		internal static void Create()
 		{
-			Create(DEFAULT_WINDOW_VIDEO_MODE, DEFAULT_WINDOW_TITLE, DEFAULT_WINDOW_STYLE);
+			Create(DefaultWindowVideoMode, DefaultWindowTitle, DefaultWindowStyle);
 		}
 
 		/// <summary>
@@ -132,4 +132,3 @@ namespace Pulsar
 		}
 	}
 }
-
