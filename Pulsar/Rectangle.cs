@@ -30,7 +30,7 @@ namespace Pulsar
 	/// <summary>
 	/// Rectangle.
 	/// </summary>
-	[Serializable()]
+	[Serializable]
 	public sealed class Rectangle : ICloneable, IEquatable<Rectangle>
 	{
 		/// <summary>
@@ -240,26 +240,24 @@ namespace Pulsar
 		/// <returns>true if the current instance is equal to the specified object; false otherwise.</returns>
 		public override bool Equals(object obj)
 		{
-			if (obj != null && obj is Rectangle)
-				return Equals((Rectangle)obj);
-			else
-				return false;
+		    var r = obj as Rectangle;
+		    return r != null && Equals(r);
 		}
 
-		/// <summary>
+	    /// <summary>
 		/// True if the passing Rectangle is equal to this Rectangle.
 		/// </summary>
 		/// <param name="other">The other Rectangle.</param>
 		/// <returns>True if the passing Rectangle is equal to this Rectangle.</returns>
 		public bool Equals(Rectangle other)
-		{
-			if (this == other)
+	    {
+	        if (this == other)
 				return true;
-			else
-				return X == other.X && Y == other.Y && Width == other.Width && Height == other.Height;
-		}
 
-		/// <summary>
+	        return X == other.X && Y == other.Y && Width == other.Width && Height == other.Height;
+	    }
+
+	    /// <summary>
 		/// True if Rectangle 2 is equal to Rectangle 1.
 		/// </summary>
 		/// <param name="r1">Rectangle 1.</param>
@@ -267,7 +265,7 @@ namespace Pulsar
 		/// <returns>True if Rectangle 2 is equal to Rectangle 1.</returns>
 		public static bool operator ==(Rectangle r1, Rectangle r2)
 		{
-			return r1.Equals(r2);
+			return r1 != null && r1.Equals(r2);
 		}
 
 		/// <summary>
@@ -278,7 +276,7 @@ namespace Pulsar
 		/// <returns>True if Rectangle 2 isn't equal to Rectangle 1.</returns>
 		public static bool operator !=(Rectangle r1, Rectangle r2)
 		{
-			return !r1.Equals(r2);
+			return r1 != null && !r1.Equals(r2);
 		}
 
 		/// <summary>
@@ -287,7 +285,7 @@ namespace Pulsar
 		/// <returns>Hash code for this object.</returns>
 		public override int GetHashCode()
 		{
-			return base.GetHashCode();
+			return Convert.ToInt32(X * Y * Width * Height);
 		}
 	}
 }
