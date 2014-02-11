@@ -26,7 +26,7 @@
 using SFML.Graphics;
 using SFML.Window;
 
-namespace Pulsar
+namespace Pulsar.Graphics
 {
 	/// <summary>
 	/// Abstract batcher dedicate to draw Graphics elements
@@ -36,17 +36,17 @@ namespace Pulsar
 		/// <summary>
 		/// View use to Draw
 		/// </summary>
-		private View _view = new View();
+		private readonly View _view = new View();
 
 		/// <summary>
 		/// The render target
 		/// </summary>
-		protected RenderTarget _renderTarget;
+		protected RenderTarget RenderTarget;
 
 		/// <summary>
 		/// The state to apply to the RenderTarget
 		/// </summary>
-		protected RenderStates _states = RenderStates.Default;
+		protected RenderStates States = RenderStates.Default;
 
 		/// <summary>
 		/// True if GraphicsBatch has begin
@@ -59,7 +59,7 @@ namespace Pulsar
 		/// <param name="renderTarget">Render target use by the GraphicsBatch</param>
 		protected GraphicsBatch(RenderTarget renderTarget)
 		{
-			_renderTarget = renderTarget;
+			RenderTarget = renderTarget;
 			_view = renderTarget.GetView();
 		}
 
@@ -68,16 +68,17 @@ namespace Pulsar
 		/// </summary>
 		/// <param name="blendMode">BlendMode to apply</param>
 		/// <param name="bounds">Float rectangle bounds</param>
+		/// <param name="center">Center</param>
 		/// <param name="size">Size of the view</param>
 		/// <param name="rotation">Rotation of the view</param>
 		public void Begin(BlendMode blendMode, FloatRect bounds, Vector2f center, Vector2f size, float rotation)
 		{
-			_states.BlendMode = blendMode;
+			States.BlendMode = blendMode;
 			_view.Reset(bounds);
 			_view.Center = center;
 			_view.Size = size;
 			_view.Rotate(rotation);
-			_renderTarget.SetView(this._view);
+			RenderTarget.SetView(_view);
 			HasBegin = true;
 		}
 
@@ -97,7 +98,7 @@ namespace Pulsar
 		/// <param name="blendMode">BlendMode</param>
 		public void Begin(BlendMode blendMode)
 		{
-			Begin(blendMode, this._renderTarget.GetView());
+			Begin(blendMode, RenderTarget.GetView());
 		}
 
 		/// <summary>
