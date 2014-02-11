@@ -30,7 +30,7 @@ namespace Pulsar
 	/// <summary>
 	/// Vector with 2 coordinates
 	/// </summary>
-	[Serializable()]
+	[Serializable]
 	public sealed class Vector : ICloneable, IEquatable<Vector>
 	{
 		/// <summary>
@@ -172,7 +172,7 @@ namespace Pulsar
 		/// <returns>True if Vector 2 is equal to Vector 1</returns>
 		public static bool operator ==(Vector v1, Vector v2)
 		{
-			return v1.Equals(v2);
+			return v1 != null && v1.Equals(v2);
 		}
 
 		/// <summary>
@@ -183,7 +183,7 @@ namespace Pulsar
 		/// <returns>True if Vector 2 isn't equal to Vector 1</returns>
 		public static bool operator !=(Vector v1, Vector v2)
 		{
-			return !v1.Equals(v2);
+			return v1 != null && !v1.Equals(v2);
 		}
 
 		/// <summary>
@@ -242,7 +242,6 @@ namespace Pulsar
 		/// <summary>
 		/// Normalize the vector
 		/// </summary>
-		/// <param name="v">A vector to normalize</param>
 		/// <returns>Normalize representation of the vector</returns>
 		public void Normalize()
 		{
@@ -289,23 +288,21 @@ namespace Pulsar
 		/// <returns>True if the passing vector is equal to this vector.</returns>
 		public bool Equals(Vector other)
 		{
-			if (this == other)
+		    if (this == other)
 				return true;
-			else
-				return X == other.X && Y == other.Y;
+
+		    return X == other.X && Y == other.Y;
 		}
 
-		/// <summary>
+	    /// <summary>
 		/// Returns a value that indicates whether the current instance is equal to a specified object.
 		/// </summary>
 		/// <param name="obj">Object to make the comparison with.</param>
 		/// <returns>true if the current instance is equal to the specified object; false otherwise.</returns>
 		public override bool Equals(object obj)
-		{
-			if (obj != null && obj is Vector)
-				return Equals((Vector)obj);
-			else
-				return false;
+	    {
+	        var v = obj as Vector;
+	        return v != null & Equals(v);
 		}
 
 		/// <summary>
@@ -314,8 +311,7 @@ namespace Pulsar
 		/// <returns>Hash code for this object.</returns>
 		public override int GetHashCode()
 		{
-			return base.GetHashCode();
+			return Convert.ToInt32(X * Y);
 		}
 	}
 }
-
