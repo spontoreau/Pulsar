@@ -24,31 +24,44 @@
  */
 
 using System;
+using Pulsar.Content;
+using SFML.Graphics;
 
-namespace Pulsar.Content
+namespace Pulsar
 {
 	/// <summary>
-	/// Resolve a content type
+	/// Resolver for Font file type
 	/// </summary>
-	public abstract class ContentResolver
+	public class FontResolver : ContentResolver
 	{
 		/// <summary>
-		/// The content manager
+		/// Load a content from a asset file name
 		/// </summary>
-		protected internal ContentManager Content { get; internal set; }
+		/// <param name="assetFileName">Asset name, relative to the loader root directory, and including the file extension.</param>
+		/// <returns>Return a Font instance corresponding to the asset file name</returns>
+		public override object Load(string assetFileName)
+		{
+			try
+			{
+				return new Font(assetFileName);
+			}
+			catch(Exception ex) 
+			{
+				throw new ContentLoadException ("Unsupport file format", ex);
+			}
+		}
 
 		/// <summary>
 		/// Type manage by the resolver
 		/// </summary>
 		/// <value>The type.</value>
-		protected internal abstract Type Type { get; } 
-
-		/// <summary>
-		/// Load a content from a asset file name
-		/// </summary>
-		/// <param name="assetFileName">Asset name, relative to the loader root directory, and including the file extension.</param>
-		/// <returns>Return a object type corresponding</returns>
-		public abstract object Load(string assetFileName);
+		protected internal override Type Type 
+		{
+			get 
+			{
+				return typeof(Font);
+			}
+		}
 	}
 }
 

@@ -27,300 +27,97 @@ using System;
 
 namespace Pulsar
 {
-/// <summary>
-	/// Extensions of the Math class.
+	/// <summary>
+	/// Extension of the Random class.
 	/// </summary>
-	public static class MathHelper
+	public static class RandomHelper
 	{
 		/// <summary>
-		/// Pi contant
+		/// Static instance of a Random class.
 		/// </summary>
-		public const float Pi = (float)Math.PI;
+		private static readonly Random _random = new Random();
 
 		/// <summary>
-		/// 2 PI constant.
+		/// Return a non negative int.
 		/// </summary>
-		public const float TwoPi = (float)(Math.PI * 2);
-
-		/// <summary>
-		/// E constant.
-		/// </summary>
-		public const float E = (float)(Math.E);
-
-		/// <summary>
-		/// Get the absolute value of a float.
-		/// </summary>
-		/// <param name="value">The absolute value of a float.</param>
-		/// <returns>The absolute value of the float.</returns>
-		public static float Abs(float value)
+		public static int NextInt()
 		{
-			return Math.Abs(value);
+			return _random.Next();
 		}
 
 		/// <summary>
-		/// get the Square root value of a float.
+		/// Return a non negative int less than maxValue.
 		/// </summary>
-		/// <param name="value">The value.</param>
-		/// <returns>The square root value of a float.</returns>
-		public static float Sqrt(float value)
+		public static int NextInt(int maxValue)
 		{
-			return (float)Math.Sqrt(value);
+			return _random.Next(maxValue);
 		}
 
 		/// <summary>
-		/// Get the value pow 2
+		/// Return a non negative int in a specific range.
 		/// </summary>
-		/// <param name="value">Value</param>
-		/// <returns>The value over 2</returns>
-		public static float Square(float value)
+		public static int NextInt(int minValue, int maxValue)
 		{
-			return value * value;
+			return _random.Next(minValue, maxValue);
 		}
 
 		/// <summary>
-		/// get a value pow by an other value.
+		/// Return a random boolean.
 		/// </summary>
-		/// <param name="x">X value.</param>
-		/// <param name="y">Pow value.</param>
+		public static bool NextBool()
+		{
+			return NextInt(2) == 1;
+		}
+
+		/// <summary>
+		/// Return a float between 0.0f and 1.0f.
+		/// </summary>
+		public static float NextFloat()
+		{
+			return (float)_random.NextDouble();
+		}
+
+		/// <summary>
+		/// Return a float less than maxValue.
+		/// </summary>
+		public static float NextFloat(float maxValue)
+		{
+			return maxValue * NextFloat();
+		}
+
+		/// <summary>
+		/// Return a float between minValue and maxValue.
+		/// </summary>
+		public static float NextFloat(float minValue, float maxValue)
+		{
+			return (maxValue - minValue) * NextFloat() + minValue;
+		}
+
+		/// <summary>
+		/// Return a random radians angle
+		/// </summary>
 		/// <returns></returns>
-		public static float Pow(float x, float y)
+		public static float NextRadiansAngle()
 		{
-			return (float)Math.Pow(x, y);
+			return NextFloat(-MathHelper.Pi, MathHelper.Pi);
 		}
 
 		/// <summary>
-		/// Get the angular representation of a cosinus value.
+		/// Return a random Normalize Vector2.
 		/// </summary>
-		/// <param name="value">Cosinus value.</param>
-		/// <returns>Angle corresponding to the cosinus.</returns>
-		public static float Acos(float value)
+		public static Vector NextVector()
 		{
-			return (float)Math.Acos(value);
+			return Vector.Polar(1.0f, NextRadiansAngle());
 		}
 
 		/// <summary>
-		/// Get the angular representation of a sinus value.
+		/// Return a random T from specific params.
 		/// </summary>
-		/// <param name="value">Sinus value.</param>
-		/// <returns>Angle corresponding to the sinus.</returns>
-		public static float Asin(float value)
+		public static T Choose<T>(params T[] values)
 		{
-			return (float)Math.Asin(value);
+			var index = NextInt(values.Length);
+
+			return values[index];
 		}
-
-		/// <summary>
-		/// Get the angular representation of a tangent value.
-		/// </summary>
-		/// <param name="value">Tangent value.</param>
-		/// <returns>Angle corresponding to the tangent.</returns>
-		public static float Atan(float value)
-		{
-			return (float)Math.Atan(value);
-		}
-
-		/// <summary>
-		/// Return the arctangent of quotient of y and x
-		/// </summary>
-		/// <param name="y">X coordinate</param>
-		/// <param name="x">Y coordinate</param>
-		/// <returns>Arctangent corresponding</returns>
-		public static float Atan2(float y, float x)
-		{
-			return (float)Math.Atan2(y, x);
-		}
-
-		/// <summary>
-		/// Get the sinus value of an angle.
-		/// </summary>
-		/// <param name="value">The angle value.</param>
-		/// <returns>Sinus corresponding to the angle value.</returns>
-		public static float Sin(float value)
-		{
-			return (float)Math.Sin(value);
-		}
-
-		/// <summary>
-		/// Get the tangent value of an angle.
-		/// </summary>
-		/// <param name="value">The angle value.</param>
-		/// <returns>Tangent corresponding to the angle value.</returns>
-		public static float Tan(float value)
-		{
-			return (float)Math.Tan(value);
-		}
-
-		/// <summary>
-		/// Get the cosinus value of an angle.
-		/// </summary>
-		/// <param name="value">The angle value.</param>
-		/// <returns>Cosinus corresponding to the angle value.</returns>
-		public static float Cos(float value)
-		{
-			return (float)Math.Cos(value);
-		}
-
-		/// <summary>
-		/// Get E pow value.
-		/// </summary>
-		/// <param name="value">Pow value.</param>
-		/// <returns>E pow value.</returns>
-		public static float Exp(float value)
-		{
-			return (float)Math.Exp(value);
-		}
-
-		/// <summary>
-		/// get the Log E base of a value.
-		/// </summary>
-		/// <param name="value">The value.</param>
-		/// <returns>Log E base a the value.</returns>
-		public static float Log(float value)
-		{
-			return (float)Math.Log(value);
-		}
-
-		/// <summary>
-		/// get the Log base 10 of a value.
-		/// </summary>
-		/// <param name="value">The value.</param>
-		/// <returns>Log base 10 a the value.</returns>
-		public static float Log10(float value)
-		{
-			return (float)Math.Log10(value);
-		}
-
-		/// <summary>
-		/// Linearly interpolates between two values. Passing amount a value of 0 will cause value1 to be returned, a value of 1 will cause value2 to be returned.
-		/// </summary>
-		/// <param name="value1">Source value.</param>
-		/// <param name="value2">Source value.</param>
-		/// <param name="amount">Value between 0 and 1 indicating the weight of value2.</param>
-		/// <returns>Lerp</returns>
-		public static float Lerp(float value1, float value2, float amount)
-		{
-			return value1 + (value2 - value1) * amount;
-		}
-
-		/// <summary>
-		/// Returns the greater of two values.
-		/// </summary>
-		/// <param name="value1">Source value.</param>
-		/// <param name="value2">Source value.</param>
-		/// <returns>The greater value.</returns>
-		public static float Max(float value1, float value2)
-		{
-			return (value1 > value2) ? value1 : value2;
-		}
-
-		/// <summary>
-		/// Returns the lesser of two values.
-		/// </summary>
-		/// <param name="value1">Source value.</param>
-		/// <param name="value2">Source value.</param>
-		/// <returns>The lesser value.</returns>
-		public static float Min(float value1, float value2)
-		{
-			return (value1 < value2) ? value1 : value2;
-		}
-
-		/// <summary>
-		/// Restricts a value to be within a specified range.
-		/// </summary>
-		/// <param name="value">The value to clamp.</param>
-		/// <param name="min">The minimum value.</param>
-		/// <param name="max">The maximum value.</param>
-		/// <returns>The clamped value.</returns>
-		public static float Clamp(float value, float min, float max)
-		{
-		    if (value > max)
-				return max;
-		    return value < min ? min : value;
-		}
-
-    /// <summary>
-		/// Round a float value
-		/// </summary>
-		/// <param name="f">The float value</param>
-		/// <returns>The float round value</returns>
-		public static float Round(float f)
-		{
-			return (float)Math.Round(f);
-		}
-
-		/// <summary>
-		/// Round a float value
-		/// </summary>
-		/// <param name="f">The float value</param>
-		/// <param name="i">The int value after comma</param>
-		/// <returns></returns>
-		public static float Round(float f, int i)
-		{
-			return (float)Math.Round(f, i);
-		}
-
-		/// <summary>
-		/// Return distance betwen two point coordinates
-		/// </summary>
-		/// <param name="x1">point 1 X coordinate.</param>
-		/// <param name="y1">point 1 Y coordinate.</param>
-		/// <param name="x2">point 2 X coordinate.</param>
-		/// <param name="y2">point 2 Y coordinate.</param>
-		/// <returns>Distance between the Point coordinates 1 and 2.</returns>
-		public static float Distance(float x1, float y1, float x2, float y2)
-		{
-			return Sqrt(((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2)));
-		}
-
-		/// <summary>
-		/// Return angle of two point coordinates in radians.
-		/// </summary>
-		/// <param name="x1">point 1 X coordinate.</param>
-		/// <param name="y1">point 1 Y coordinate.</param>
-		/// <param name="x2">point 2 X coordinate.</param>
-		/// <param name="y2">point 2 Y coordinate.</param>
-		/// <returns>Angle in radian of of the point coordinates 1 and 2.</returns>
-		public static float RadiansAngle(float x1, float y1, float x2, float y2)
-		{
-			return Atan2(x1 - x2, y2 - y1);
-		}
-
-		/// <summary>
-		/// Convert radian angle into degree angle.
-		/// </summary>
-        /// <param name="radians">Radian angle.</param>
-		/// <returns>Degree angle.</returns>
-		public static float ToDegrees(float radians)
-		{
-			return radians * (180.0f / Pi);
-		}
-
-		/// <summary>
-		/// Convert degree angle into radian angle.
-		/// </summary>
-        /// <param name="degrees">Degree angle.</param>
-		/// <returns>Radian angle.</returns>
-		public static float ToRadians(float degrees)
-		{
-			return degrees * (Pi / 180.0f);
-		}
-
-		/// <summary>
-		/// Return true if clockwise direction is the faster way to go from current angle to reach angle.
-		/// </summary>
-		/// <param name="currentAngle">Current angle</param>
-		/// <param name="angleToReach">Angle to reach</param>
-		/// <returns>True if clockwise direction is the faster way to go from current angle to reach angle.</returns>
-		public static bool ClockWiseDirection(float currentAngle, float angleToReach)
-		{
-			var clockWiseDirection = angleToReach - currentAngle;
-
-			if (clockWiseDirection > 0 && Abs(clockWiseDirection) <= 180) return true;
-		    if (clockWiseDirection > 0 && Abs(clockWiseDirection) > 180) return false;
-		    if (clockWiseDirection < 0 && Abs(clockWiseDirection) <= 180) return false;
-		    if (clockWiseDirection < 0 && Abs(clockWiseDirection) > 180) return true;
-
-		    return true;
-		}
-	}
+	}		
 }
-

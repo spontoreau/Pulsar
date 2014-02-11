@@ -62,10 +62,14 @@
     <Compile Include="WindowContext.cs" />
     <Compile Include="Graphics\GraphicsBatch.cs" />
     <Compile Include="Graphics\SpriteBatch.cs" />
+    <Compile Include="Content\Resolvers\FontResolver.cs" />
+    <Compile Include="Content\Resolvers\TextureResolver.cs" />
+    <Compile Include="Content\Resolvers\SoundResolver.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Content\" />
     <Folder Include="Graphics\" />
+    <Folder Include="Content\Resolvers\" />
   </ItemGroup>
 </Project>

@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace Pulsar.Content
 {
@@ -62,7 +63,7 @@ namespace Pulsar.Content
 		/// <summary>
 		///  Initializes a new instance of ContentManager
 		/// </summary>
-		public ContentManager()
+		internal ContentManager()
 		{
 			Assets = new Dictionary<string, object>();
 			Resolvers = new Dictionary<Type, ContentResolver>();
@@ -109,9 +110,7 @@ namespace Pulsar.Content
 		public T Load<T>(string assetFileName, bool caching = true)
         {
             if (string.IsNullOrEmpty(assetFileName))
-            {
-                throw new ContentLoadException(""); //TODO explicit exception
-            }
+				throw new ArgumentException("Asset file name can't be empty or null");
 
             object obj;
 
@@ -129,17 +128,17 @@ namespace Pulsar.Content
                         }
                         catch (Exception ex)
                         {
-                            throw new ContentLoadException("", ex); //TODO explicit exception
+							throw new ContentLoadException(string.Format("Couldn't load resource {0}", assetFileName), ex); //TODO explicit exception
                         }
                     }
                     else
                     {
-                        throw new ContentLoadException(""); //TODO explicit exception
+						throw new ContentLoadException(string.Format("Failed to get a valid resolver for resource {0}", assetFileName)); //TODO explicit exception
                     }
                 }
                 else
                 {
-                    throw new ContentLoadException(""); //TODO explicit exception
+					throw new ContentLoadException(string.Format("Can't find a resolver for resource {0}", assetFileName)); //TODO explicit exception
                 }
 
                 if (caching)
@@ -147,6 +146,16 @@ namespace Pulsar.Content
             }
             return (T) Convert.ChangeType(obj, typeof (T));
         }
+
+		/// <summary>
+		/// Internal add content method. Allow only for internal resolver to dynamicly cache resource in the content manager (like package resolver)
+		/// </summary>
+		/// <param name="key">Resource key</param>
+		/// <param name="o">Object to add</param>
+		internal void AddContent(string key, object o)
+		{
+			Assets.Add(key, o);
+		}
 
         /// <summary>
 		/// Add a resolver to the content manager
@@ -164,7 +173,16 @@ namespace Pulsar.Content
 		/// </summary>
 		private void LoadResolvers()
 		{
-			//TODO auto load resolver from app domain
+			var type = typeof(ContentResolver);
+
+			foreach (Type t in Assembly.GetExecutingAssembly().GetTypes())
+			{
+				if (!t.IsAbstract && t.BaseType.FullName == type.FullName)
+				{
+					var r = (ContentResolver)Activator.CreateInstance(t);
+					AddResolver(r.Type, r);
+				}
+			}
 		}
 	}
 }
