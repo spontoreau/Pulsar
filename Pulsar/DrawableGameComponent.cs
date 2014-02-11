@@ -53,11 +53,10 @@ namespace Pulsar
 			}
 			set
 			{
-				if (_visible != value)
-				{
-					_visible = value;
-					OnVisibleChanged(EventArgs.Empty);
-				}
+			    if (_visible == value) return;
+                
+			    _visible = value;
+			    OnVisibleChanged(EventArgs.Empty);
 			}
 		}
 
@@ -72,11 +71,10 @@ namespace Pulsar
 			}
 			set
 			{
-				if (_drawOrder != value)
-				{
-					_drawOrder = value;
-					OnUpdateOrderChanged(EventArgs.Empty);
-				}
+			    if (_drawOrder == value) return;
+
+			    _drawOrder = value;
+			    OnUpdateOrderChanged(EventArgs.Empty);
 			}
 		}
 
