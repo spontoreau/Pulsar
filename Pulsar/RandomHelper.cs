@@ -35,7 +35,7 @@ namespace Pulsar
 		/// <summary>
 		/// Static instance of a Random class.
 		/// </summary>
-		private static Random _random = new Random();
+		private static readonly Random _random = new Random();
 
 		/// <summary>
 		/// Return a non negative int.
@@ -99,7 +99,7 @@ namespace Pulsar
 		/// <returns></returns>
 		public static float NextRadiansAngle()
 		{
-			return NextFloat(-MathHelper.Pi, (float)MathHelper.Pi);
+			return NextFloat(-MathHelper.Pi, MathHelper.Pi);
 		}
 
 		/// <summary>
@@ -107,7 +107,7 @@ namespace Pulsar
 		/// </summary>
 		public static Vector NextVector()
 		{
-			return Vector.Polar(1.0f, RandomHelper.NextRadiansAngle());
+			return Vector.Polar(1.0f, NextRadiansAngle());
 		}
 
 		/// <summary>
