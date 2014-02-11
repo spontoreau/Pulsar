@@ -26,10 +26,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
-namespace Pulsar
+namespace Pulsar.Content
 {
-/// <summary>
+    /// <summary>
 	/// The ContentManager is the run-time component which loads managed objects from support file format.
 	/// </summary>
 	public sealed class ContentManager : IDisposable
@@ -42,7 +43,7 @@ namespace Pulsar
 		/// <summary>
 		/// Asset Dictionary use to store 
 		/// </summary>
-		private Dictionary<string, object> Assets;
+		private Dictionary<string, object> Assets { get; set; }
 
 		/// <summary>
 		/// Gets or sets the root directory associated with this ContentManager
@@ -54,7 +55,7 @@ namespace Pulsar
 		/// </summary>
 		public void Dispose()
 		{
-			this.Dispose(true);
+			Dispose(true);
 			GC.SuppressFinalize(this);
 		}
 
@@ -80,24 +81,25 @@ namespace Pulsar
 			}
 		}
 
+        ~ContentManager()
+		{
+			Dispose(false);
+		}
+
 		/// <summary>
 		/// Disposes all data that was loaded by this ContentManager.
 		/// </summary>
 		private void Unload()
 		{
-			foreach (var kvp in this.Assets)
-			{
-				if (kvp.Value is IDisposable)
-				{
-					var d = (IDisposable)kvp.Value;
-					d.Dispose();
-				}
-			}
+		    foreach (var d in Assets.Select(kvp => kvp.Value).OfType<IDisposable>())
+		    {
+		        d.Dispose();
+		    }
 
-			Assets.Clear();
+		    Assets.Clear();
 		}
 
-		/// <summary>
+        /// <summary>
 		/// Loads an asset. 
 		/// </summary>
 		/// <typeparam name="T">The type of asset to load.</typeparam>
@@ -105,52 +107,48 @@ namespace Pulsar
 		/// <param name="caching">Optional. True by default, if false content manager don't keep in memory the T type object</param>
 		/// <returns>The loaded asset.</returns>
 		public T Load<T>(string assetFileName, bool caching = true)
-		{
-			//TODO refactoring
-			if (!string.IsNullOrEmpty(assetFileName))
-			{
-				object obj = null;
+        {
+            if (string.IsNullOrEmpty(assetFileName))
+            {
+                throw new ContentLoadException(""); //TODO explicit exception
+            }
 
-				if(!Assets.TryGetValue(assetFileName, out obj))
-				{
-					//Get the Resolver for T type
-					ContentResolver resolver = null;
+            object obj;
 
-					if (Resolvers.ContainsKey(typeof(T)))
-					{
-						if (Resolvers.TryGetValue(typeof(T), out resolver))
-						{
-							try
-							{
-								obj = resolver.Load(RootDirectory + Path.DirectorySeparatorChar + assetFileName);
-							}
-							catch(Exception ex)
-							{
-								throw new ContentLoadException("", ex);//TODO explicit exception
-							}
-						}
-						else
-						{
-							throw new ContentLoadException("");//TODO explicit exception
-						}
-					}
-					else
-					{
-						throw new ContentLoadException("");//TODO explicit exception
-					}
+            if (!Assets.TryGetValue(assetFileName, out obj))
+            {
+                //Get the Resolver for T type
+                if (Resolvers.ContainsKey(typeof (T)))
+                {
+                    ContentResolver resolver;
+                    if (Resolvers.TryGetValue(typeof (T), out resolver))
+                    {
+                        try
+                        {
+                            obj = resolver.Load(RootDirectory + Path.DirectorySeparatorChar + assetFileName);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new ContentLoadException("", ex); //TODO explicit exception
+                        }
+                    }
+                    else
+                    {
+                        throw new ContentLoadException(""); //TODO explicit exception
+                    }
+                }
+                else
+                {
+                    throw new ContentLoadException(""); //TODO explicit exception
+                }
 
-					if(caching)
-						Assets.Add(assetFileName, obj);
-				}
-				return (T)Convert.ChangeType(obj, typeof(T));                
-			}
-			else
-			{
-				throw new ContentLoadException("");//TODO explicit exception
-			}
-		}
+                if (caching)
+                    Assets.Add(assetFileName, obj);
+            }
+            return (T) Convert.ChangeType(obj, typeof (T));
+        }
 
-		/// <summary>
+        /// <summary>
 		/// Add a resolver to the content manager
 		/// </summary>
 		/// <param name="type">Type to resolve</param>
