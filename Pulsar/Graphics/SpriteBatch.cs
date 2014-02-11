@@ -26,7 +26,7 @@
 using SFML.Graphics;
 using SFML.Window;
 
-namespace Pulsar
+namespace Pulsar.Graphics
 {
 /// <summary>
 	/// Sprite batcher. Allow to Draw sprites with the same settings. Can perfom multiple draw with saving memory.
@@ -41,12 +41,12 @@ namespace Pulsar
 		/// <summary>
 		/// Sprite use to Draw sprite
 		/// </summary>
-		private Sprite _sprite = new Sprite();
+		private readonly Sprite _sprite = new Sprite();
 
 		/// <summary>
 		/// Text use to Draw string
 		/// </summary>
-		private Text _text = new Text();
+		private readonly Text _text = new Text();
 
 		/// <summary>
 		/// Create a new instance of the SpriteBatch
@@ -55,7 +55,7 @@ namespace Pulsar
 		private SpriteBatch(RenderTarget renderTarget)
 			: base(renderTarget)
 		{
-			_renderTarget = renderTarget;
+			RenderTarget = renderTarget;
 		}        
 
 		/// <summary>
@@ -69,47 +69,49 @@ namespace Pulsar
 		/// <param name="origin">Origin of the texture</param>
 		public void Draw(Texture texture, Rectangle destination, Rectangle source, Color color, float rotation, Vector origin)
 		{
-			if (HasBegin)
-			{
-				if (source != null)
-					_sprite.TextureRect = new IntRect((int)source.X,(int)source.Y,(int)source.Width,(int)source.Height);
-				else
-				{
-					var v = texture.Size;
-					_sprite.TextureRect = new IntRect(0, 0, (int)v.X, (int)v.Y);
-				}
+		    if (!HasBegin)
+		    {
+		        //TODO throw exception
+		    }
+		    else
+		    {
+		        if (source != null)
+		            _sprite.TextureRect = new IntRect((int) source.X, (int) source.Y, (int) source.Width, (int) source.Height);
+		        else
+		        {
+		            var v = texture.Size;
+		            _sprite.TextureRect = new IntRect(0, 0, (int) v.X, (int) v.Y);
+		        }
 
-				_sprite.Texture = texture;
+		        _sprite.Texture = texture;
 
-				var position = _sprite.Position;
-				position.X = destination.Position.X;
-				position.Y = destination.Position.X;
-				_sprite.Position = position;
+		        var position = _sprite.Position;
+		        position.X = destination.Position.X;
+		        position.Y = destination.Position.X;
+		        _sprite.Position = position;
 
-				var c = _sprite.Color;
-				c.A = color.A;
-				c.B = color.B;
-				c.G = color.G;
-				c.R = color.R;
-				_sprite.Color = c;
+		        var c = _sprite.Color;
+		        c.A = color.A;
+		        c.B = color.B;
+		        c.G = color.G;
+		        c.R = color.R;
+		        _sprite.Color = c;
 
-				_sprite.Rotation = rotation;
+		        _sprite.Rotation = rotation;
 
-				var o = this._sprite.Origin;
-				o.X = origin.X;
-				o.Y = origin.Y;
-				_sprite.Origin = o;
+		        var o = _sprite.Origin;
+		        o.X = origin.X;
+		        o.Y = origin.Y;
+		        _sprite.Origin = o;
 
-				_sprite.Scale = new Vector2f(destination.Width / (float)_sprite.TextureRect.Width, destination.Height / (float)_sprite.TextureRect.Height);// TODO extension pour scale
-				_renderTarget.Draw(_sprite);
-			}
-			else
-			{
-				//TODO throw exception
-			}
+		        _sprite.Scale = new Vector2f(destination.Width/_sprite.TextureRect.Width,
+		                                     destination.Height/_sprite.TextureRect.Height);
+		        // TODO extension pour scale
+		        RenderTarget.Draw(_sprite);
+		    }
 		}
 
-		/// <summary>
+    /// <summary>
 		/// Draw a texture
 		/// </summary>
 		/// <param name="texture">Texture to draw</param>
@@ -144,48 +146,48 @@ namespace Pulsar
 		/// <param name="scale">Scale of the texture</param>
 		public void Draw(Texture texture, Vector position, Rectangle source, Color color, float rotation, Vector origin, float scale)
 		{
-			if (HasBegin)
-			{
-				if (source != null)
-					_sprite.TextureRect = new IntRect((int)source.X, (int)source.Y, (int)source.Width, (int)source.Height);
-				else
-				{
-					var v = texture.Size;
-					_sprite.TextureRect = new IntRect(0, 0, (int)v.X, (int)v.Y);
-				}
+		    if (!HasBegin)
+		    {
+		        //TODO throw exception
+		    }
+		    else
+		    {
+		        if (source != null)
+		            _sprite.TextureRect = new IntRect((int) source.X, (int) source.Y, (int) source.Width, (int) source.Height);
+		        else
+		        {
+		            var v = texture.Size;
+		            _sprite.TextureRect = new IntRect(0, 0, (int) v.X, (int) v.Y);
+		        }
 
-				_sprite.Texture = texture;
+		        _sprite.Texture = texture;
 
-				var p = _sprite.Position;
-				p.X = position.X;
-				p.Y = position.X;
-				_sprite.Position = p;
+		        var p = _sprite.Position;
+		        p.X = position.X;
+		        p.Y = position.X;
+		        _sprite.Position = p;
 
-				var c = _sprite.Color;
-				c.A = color.A;
-				c.B = color.B;
-				c.G = color.G;
-				c.R = color.R;
-				_sprite.Color = c;
+		        var c = _sprite.Color;
+		        c.A = color.A;
+		        c.B = color.B;
+		        c.G = color.G;
+		        c.R = color.R;
+		        _sprite.Color = c;
 
-				_sprite.Rotation = MathHelper.ToDegrees(rotation);
+		        _sprite.Rotation = MathHelper.ToDegrees(rotation);
 
-				var o = _sprite.Origin;
-				o.X = origin.X;
-				o.Y = origin.Y;
-				_sprite.Origin = o;
+		        var o = _sprite.Origin;
+		        o.X = origin.X;
+		        o.Y = origin.Y;
+		        _sprite.Origin = o;
 
-				_sprite.Scale = new Vector2f(scale, scale);
+		        _sprite.Scale = new Vector2f(scale, scale);
 
-				_renderTarget.Draw(_sprite);
-			}
-			else
-			{
-				//TODO throw exception
-			}
+		        RenderTarget.Draw(_sprite);
+		    }
 		}
 
-		/// <summary>
+    /// <summary>
 		/// Draw a texture
 		/// </summary>
 		/// <param name="texture">Texture to draw</param>
@@ -221,36 +223,36 @@ namespace Pulsar
 		/// <param name="styles">Optional, style of the text</param>
 		public void DrawString(Font font, string text, Vector position, Color color, float rotation, Vector origin, float scale, Text.Styles styles = Text.Styles.Regular)
 		{
-			if (HasBegin)
-			{
-				_text.Font = font;
-				_text.DisplayedString = text;
+		    if (!HasBegin)
+		    {
+		        //TODO throw exception
+		    }
+		    else
+		    {
+		        _text.Font = font;
+		        _text.DisplayedString = text;
 
-				var p = _text.Position;
-				p.X = position.X;
-				p.Y = position.Y;
-				_text.Position = p;
+		        var p = _text.Position;
+		        p.X = position.X;
+		        p.Y = position.Y;
+		        _text.Position = p;
 
-				_text.Rotation = rotation;
-				_text.Scale = new Vector2f(scale, scale);
+		        _text.Rotation = rotation;
+		        _text.Scale = new Vector2f(scale, scale);
 
-				var c = this._text.Color;
-				c.A = color.A;
-				c.B = color.B;
-				c.G = color.G;
-				c.R = color.R;
-				_text.Color = c;
+		        var c = _text.Color;
+		        c.A = color.A;
+		        c.B = color.B;
+		        c.G = color.G;
+		        c.R = color.R;
+		        _text.Color = c;
 
-				_text.Style = styles;
-				_renderTarget.Draw(_text);
-			}
-			else
-			{
-				//TODO throw exception
-			}
+		        _text.Style = styles;
+		        RenderTarget.Draw(_text);
+		    }
 		}
 
-		/// <summary>
+    /// <summary>
 		/// Draw a string
 		/// </summary>
 		/// <param name="font">Font to use to draw a string</param>
@@ -279,7 +281,7 @@ namespace Pulsar
 
 		static void WindowContext_Created(object sender, System.EventArgs e)
 		{
-			_instance._renderTarget = WindowContext.Window;
+			_instance.RenderTarget = WindowContext.Window;
 		}
 	}
 }
