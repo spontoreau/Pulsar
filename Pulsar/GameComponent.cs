@@ -35,7 +35,7 @@ namespace Pulsar
 		/// <summary>
 		/// Object use for lock operation
 		/// </summary>
-		private object _syncRoot = new object();
+		private readonly object _syncRoot = new object();
 
 		/// <summary>
 		/// Indicates whether GameComponent.Update should be called when Game.Update is called.
@@ -63,11 +63,10 @@ namespace Pulsar
 			}
 			set
 			{
-				if (_enabled != value)
-				{
-					_enabled = value;
-					OnEnabledChanged(EventArgs.Empty);
-				}
+			    if (_enabled == value) return;
+
+			    _enabled = value;
+			    OnEnabledChanged(EventArgs.Empty);
 			}
 		}
 
@@ -82,11 +81,10 @@ namespace Pulsar
 			}
 			set
 			{
-				if (_updateOrder != value)
-				{
-					_updateOrder = value;
-					OnUpdateOrderChanged(EventArgs.Empty);
-				}
+			    if (_updateOrder == value) return;
+
+			    _updateOrder = value;
+			    OnUpdateOrderChanged(EventArgs.Empty);
 			}
 		}
 
