@@ -43,7 +43,7 @@ namespace Pulsar
 		/// <param name="component">The game component affected by the event.</param>
 		public GameComponentCollectionEventArgs(IGameComponent component)
 		{
-			this.Component = component;
+			Component = component;
 		}
 	}
 }
