@@ -30,7 +30,7 @@ using System.Linq;
 
 namespace Pulsar
 {
-/// <summary>
+    /// <summary>
 	/// Provides basic game logic. 
 	/// </summary>
 	public class Game : IDisposable
@@ -43,7 +43,7 @@ namespace Pulsar
 		/// <summary>
 		/// Object use for lock operation
 		/// </summary>
-		protected object _syncRoot = new object();  
+		protected object SyncRoot = new object();  
 
 		/// <summary>
 		/// The game loop time
@@ -97,16 +97,15 @@ namespace Pulsar
 		{
 			get
 			{
-				return this._isFixedTimeStep;
+				return _isFixedTimeStep;
 			}
 			set
 			{
-				if (WindowContext.IsCreated)
-				{
-					this._isFixedTimeStep = value;
-					WindowContext.Window.SetVerticalSyncEnabled(false);
-					WindowContext.Window.SetFramerateLimit((value) ? 120U : 0U);//uint force to multiple by 2 to obtain refresh at 60fps
-				}
+			    if (!WindowContext.IsCreated) return;
+
+			    _isFixedTimeStep = value;
+			    WindowContext.Window.SetVerticalSyncEnabled(false);
+			    WindowContext.Window.SetFramerateLimit((value) ? 120U : 0U);//uint force to multiple by 2 to obtain refresh at 60fps
 			}
 		}
 
@@ -122,15 +121,14 @@ namespace Pulsar
 		{
 			get
 			{
-				return this._isMouseVisible;
+				return _isMouseVisible;
 			}
 			set
 			{
-				if (WindowContext.IsCreated)
-				{
-					this._isMouseVisible = value;
-					WindowContext.Window.SetMouseCursorVisible(value);
-				}
+			    if (!WindowContext.IsCreated) return;
+
+			    _isMouseVisible = value;
+			    WindowContext.Window.SetMouseCursorVisible(value);
 			}
 		}
 
@@ -150,8 +148,8 @@ namespace Pulsar
 		public Game()
 		{
 			Components = new GameComponentCollection();
-			Components.ComponentAdded += new EventHandler<GameComponentCollectionEventArgs>(GameComponentAdded);
-			Components.ComponentRemoved += new EventHandler<GameComponentCollectionEventArgs>(GameComponentRemoved);
+			Components.ComponentAdded += GameComponentAdded;
+			Components.ComponentRemoved += GameComponentRemoved;
 
 			InitWaitingComponents = new Collection<IGameComponent>();
 			UpdateableComponents = new Collection<IUpdateable>();
@@ -169,27 +167,20 @@ namespace Pulsar
 			if (IsRunning)
 				throw new InvalidOperationException("Game is running");
 
-			try
-			{
-				IsExiting = false;
-				BeginRun();
-				BeginInitialize();
-				Initialize();
-				EndInitialize();
-				LoadContent();
-				IsRunning = true; 
+		    IsExiting = false;
+		    BeginRun();
+		    BeginInitialize();
+		    Initialize();
+		    EndInitialize();
+		    LoadContent();
+		    IsRunning = true; 
 				               
-				while (IsRunning && !IsExiting)
-				{
-					Tick();
-				}
-				UnloadContent(); 
-				EndRun();                             
-			}
-			catch(Exception ex)
-			{
-				throw ex;
-			}
+		    while (IsRunning && !IsExiting)
+		    {
+		        Tick();
+		    }
+		    UnloadContent(); 
+		    EndRun();
 		}
 
 
@@ -222,7 +213,7 @@ namespace Pulsar
 			Update(GameTime);
 			EndUpdate();
 			BeginDraw();
-			Draw(this.GameTime);
+			Draw(GameTime);
 			EndDraw();
 		}
 
@@ -255,7 +246,7 @@ namespace Pulsar
 		{
 			if (isDisposing)
 			{
-				lock (_syncRoot)
+				lock (SyncRoot)
 				{
 					//Clear the GameComponant collection will raise an event for each component remove.
 					Components.Clear();
@@ -312,8 +303,8 @@ namespace Pulsar
 		/// </summary>
 		protected virtual void BeginInitialize()
 		{
-			WindowContext.Created += new EventHandler<EventArgs>(RenderWindowCreated);
-			WindowContext.Creating += new EventHandler<EventArgs>(RenderWindowCreating);
+			WindowContext.Created += RenderWindowCreated;
+			WindowContext.Creating += RenderWindowCreating;
 		}
 
 		/// <summary>
@@ -332,7 +323,7 @@ namespace Pulsar
 		{
 			Watch = new Stopwatch();
 
-			foreach (var component in this.InitWaitingComponents)
+			foreach (var component in InitWaitingComponents)
 				component.Initialize();
 
 			InitWaitingComponents.Clear();
@@ -344,7 +335,7 @@ namespace Pulsar
 		/// <param name="gameTime">Time passed since the last call to Draw.</param>
 		protected virtual void Draw(GameTime gameTime)
 		{
-			foreach (IDrawable drawable in this.DrawableComponents)
+			foreach (IDrawable drawable in DrawableComponents)
 			{
 				if (drawable.Visible)
 					drawable.Draw(gameTime);
@@ -400,19 +391,18 @@ namespace Pulsar
 			else //if the game is not running stack in the initialize waiting list
 				InitWaitingComponents.Add(eventArgs.Component);
 
-			if (eventArgs.Component is IUpdateable)
+		    var updateable = eventArgs.Component as IUpdateable;
+            if (updateable != null)
 			{
-				var updateable = (IUpdateable)eventArgs.Component;
-				InsertUpdateable(updateable);
-				updateable.UpdateOrderChanged += new EventHandler<EventArgs>(UpdateOrderChanged);
+                InsertUpdateable(updateable);
+                updateable.UpdateOrderChanged += UpdateOrderChanged;
 			}
 
-			if (eventArgs.Component is IDrawable)
-			{
-				var drawable = (IDrawable)eventArgs.Component;
-				InsertDrawable(drawable);
-				drawable.DrawOrderChanged += new EventHandler<EventArgs>(DrawOrderChanged);
-			}
+		    var drawable = eventArgs.Component as IDrawable;
+		    if (drawable == null) return;
+
+		    InsertDrawable(drawable);
+		    drawable.DrawOrderChanged += DrawOrderChanged;
 		}
 
 		/// <summary>
@@ -426,19 +416,18 @@ namespace Pulsar
 			if (!IsRunning) //if the game is not running, initialize and loadcontent is'nt make, so remove the component from the InitWaitingGameComponent collection
 				InitWaitingComponents.Remove(component);
 
-			if (component is IUpdateable)
+            var updateable = component as IUpdateable;
+            if (updateable != null)
 			{
-				var updateable = (IUpdateable)component;
 				UpdateableComponents.Remove(updateable);
-				updateable.UpdateOrderChanged -= new EventHandler<EventArgs>(UpdateOrderChanged);                
+				updateable.UpdateOrderChanged -= UpdateOrderChanged;                
 			}
 
-			if (eventArgs.Component is IDrawable)
-			{
-				var drawable = (IDrawable)eventArgs.Component;
-				this.DrawableComponents.Remove(drawable);
-				drawable.DrawOrderChanged -= new EventHandler<EventArgs>(DrawOrderChanged);
-			}
+            var drawable = eventArgs.Component as IDrawable;
+		    if (drawable == null) return;
+
+		    DrawableComponents.Remove(drawable);
+		    drawable.DrawOrderChanged -= DrawOrderChanged;
 		}
 
 		/// <summary>
@@ -487,7 +476,7 @@ namespace Pulsar
 			//find the follower and insert the drawable at the index of the follower
 			var follower = (from u in DrawableComponents where u.DrawOrder >= drawable.DrawOrder select u).FirstOrDefault();
 			//if follower is null, drawable is the last in the collection, otherwise take the index of the follower
-			var index = (follower == null) ? this.DrawableComponents.Count : this.DrawableComponents.IndexOf(follower);
+			var index = (follower == null) ? DrawableComponents.Count : DrawableComponents.IndexOf(follower);
 			DrawableComponents.Insert(index, drawable);
 		}
 
@@ -538,9 +527,9 @@ namespace Pulsar
 		/// <param name="eventArgs">Arguments of the Created event.</param>
 		protected virtual void RenderWindowCreated(object sender, EventArgs eventArgs)
 		{
-			WindowContext.Window.GainedFocus += new EventHandler(GainedFocus);
-			WindowContext.Window.LostFocus += new EventHandler(LostFocus);
-			WindowContext.Window.Closed += new EventHandler(Closed);
+			WindowContext.Window.GainedFocus += GainedFocus;
+			WindowContext.Window.LostFocus += LostFocus;
+			WindowContext.Window.Closed += Closed;
 			IsActive = true;
 		}
 	}
