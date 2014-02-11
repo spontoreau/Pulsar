@@ -30,7 +30,7 @@ namespace Pulsar
 	/// <summary>
 	/// Four value color
 	/// </summary>
-	[Serializable()]
+	[Serializable]
 	public sealed class Color : ICloneable, IEquatable<Color>
 	{
 		/// <summary>
@@ -196,10 +196,8 @@ namespace Pulsar
 		/// <returns>true if the current instance is equal to the specified object; false otherwise.</returns>
 		public override bool Equals(object obj)
 		{
-			if (obj != null && obj is Color)
-				return Equals((Color)obj);
-			else
-				return false;
+		    var a = obj as Color;
+		    return a != null && Equals(a);
 		}
 
 		/// <summary>
@@ -211,8 +209,8 @@ namespace Pulsar
 		{
 			if (this == other)
 				return true;
-			else
-				return A == other.A && R == other.R && G == other.G && B == other.B;
+			
+			return A == other.A && R == other.R && G == other.G && B == other.B;
 		}
 
 		/// <summary>
@@ -222,7 +220,7 @@ namespace Pulsar
 		/// <param name="value2">Color 2</param>
 		/// <param name="amount">Amout to interpolate between the two colors</param>
 		/// <returns>Color corresponding to the lerp operation</returns>
-		public static Color LerpRGB(Color value1, Color value2, float amount)
+		public static Color LerpRgb(Color value1, Color value2, float amount)
 		{
 			return new Color(
 				(byte)MathHelper.Lerp(value1.R, value2.R, amount),
@@ -237,7 +235,7 @@ namespace Pulsar
 		/// <param name="value2">Color 2</param>
 		/// <param name="amount">Amout to interpolate between the two colors</param>
 		/// <returns>Color corresponding to the lerp operation</returns>
-		public static Color LerpARGB(Color value1, Color value2, float amount)
+		public static Color LerpArgb(Color value1, Color value2, float amount)
 		{
 			return new Color(
 				(byte)MathHelper.Lerp(value1.R, value2.R, amount),
@@ -254,7 +252,7 @@ namespace Pulsar
 		/// <returns>True if Color 2 is equal to Vector 1</returns>
 		public static bool operator ==(Color c1, Color c2)
 		{
-			return c1.Equals(c2);
+			return c1 != null && c1.Equals(c2);
 		}
 
 		/// <summary>
@@ -265,7 +263,7 @@ namespace Pulsar
 		/// <returns>True if Color 2 isn't equal to Color 1</returns>
 		public static bool operator !=(Color c1, Color c2)
 		{
-			return !c1.Equals(c2);
+			return c1 != null && !c1.Equals(c2);
 		}
 
 		/// <summary>
@@ -274,7 +272,7 @@ namespace Pulsar
 		/// <returns>Hash code for this object.</returns>
 		public override int GetHashCode()
 		{
-			return base.GetHashCode();
+			return A * R * G * B;
 		}
 	}
 }
