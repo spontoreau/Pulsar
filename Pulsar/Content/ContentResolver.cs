@@ -23,9 +23,7 @@
  * THE SOFTWARE.
  */
 
-using System;
-
-namespace Pulsar
+namespace Pulsar.Content
 {
 /// <summary>
 	/// Resolve a content type
