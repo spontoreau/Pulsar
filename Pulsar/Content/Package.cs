@@ -97,7 +97,7 @@ namespace Pulsar.Content
 			if (!Directory.Exists (path))
 				throw new Exception ("Path not exist");
 
-			var completeFilePath = Path.Combine(path, FileName); 
+			var completeFilePath = Path.Combine(path, package.FileName); 
 
 			using (var stream = new MemoryStream ()) 
 			{
@@ -116,12 +116,14 @@ namespace Pulsar.Content
 		/// <param name="filePath">File Path.</param>
 		public static Package Load(string filePath)
 		{
-			if (!File.Exists (path))
+			if (!File.Exists (filePath))
 				throw new Exception ("Path not exist");
 
-			var compressByteArray = File.ReadAllBytes(path);
+			var compressByteArray = File.ReadAllBytes(filePath);
 
-			var uncompressByteArray = ZipHelper.Uncompress (compressByteArray);
+			var compressSteam = new MemoryStream (compressByteArray);
+			var uncompressByteArray = ZipHelper.Uncompress (compressSteam);
+			compressSteam.Close ();
 
 			using (var stream = new MemoryStream (uncompressByteArray)) 
 			{
