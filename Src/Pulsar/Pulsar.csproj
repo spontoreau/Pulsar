@@ -30,15 +30,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="sfmlnet-audio-2">
-      <HintPath>..\ExtLibs\sfmlnet-audio-2.dll</HintPath>
-    </Reference>
-    <Reference Include="sfmlnet-graphics-2">
-      <HintPath>..\ExtLibs\sfmlnet-graphics-2.dll</HintPath>
-    </Reference>
-    <Reference Include="sfmlnet-window-2">
-      <HintPath>..\ExtLibs\sfmlnet-window-2.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -78,5 +69,19 @@
     <Folder Include="Graphics\" />
     <Folder Include="Content\Resolvers\" />
     <Folder Include="Helpers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Sfml\Audio\sfml-audio.csproj">
+      <Project>{0B202C4D-A457-47FE-84A3-031DD878C6BE}</Project>
+      <Name>sfml-audio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sfml\Graphics\sfml-graphics.csproj">
+      <Project>{46786269-57B9-48E7-AA4F-8F4D84609FE6}</Project>
+      <Name>sfml-graphics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sfml\Window\sfml-window.csproj">
+      <Project>{D17DE83D-A592-461F-8AF2-53F9E22E1D0F}</Project>
+      <Name>sfml-window</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
