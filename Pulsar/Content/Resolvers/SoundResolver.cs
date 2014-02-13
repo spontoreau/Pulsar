@@ -27,7 +27,7 @@ using System;
 using SFML.Audio;
 using Pulsar.Content;
 
-namespace Pulsar
+namespace Pulsar.Content.Resolvers
 {
 	/// <summary>
 	/// Resolver for Sound file type

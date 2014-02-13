@@ -25,10 +25,11 @@
 
 using SFML.Graphics;
 using SFML.Window;
+using Pulsar.Helpers;
 
 namespace Pulsar.Graphics
 {
-/// <summary>
+	/// <summary>
 	/// Sprite batcher. Allow to Draw sprites with the same settings. Can perfom multiple draw with saving memory.
 	/// </summary>
 	public sealed class SpriteBatch : GraphicsBatch

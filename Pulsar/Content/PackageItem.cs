@@ -24,43 +24,45 @@
  */
 
 using System;
-using Pulsar.Content;
-using SFML.Graphics;
+using System.IO;
 
-namespace Pulsar.Content.Resolvers
+namespace Pulsar.Content
 {
 	/// <summary>
-	/// Resolver for Font file type
+	/// Define an item of a package
 	/// </summary>
-	public class FontResolver : ContentResolver
+	[Serializable]
+	public class PackageItem
 	{
 		/// <summary>
-		/// Load a content from a asset file name
+		/// Gets or sets the key.
 		/// </summary>
-		/// <param name="assetFileName">Asset name, relative to the loader root directory, and including the file extension.</param>
-		/// <returns>Return a Font instance corresponding to the asset file name</returns>
-		public override object Load(string assetFileName)
-		{
-			try
-			{
-				return new Font(assetFileName);
-			}
-			catch(Exception ex) 
-			{
-				throw new ContentLoadException ("Unsupport file format", ex);
-			}
-		}
+		/// <value>The key.</value>
+		public string Key { get; set; }
 
 		/// <summary>
-		/// Type manage by the resolver
+		/// Gets the type.
 		/// </summary>
 		/// <value>The type.</value>
-		protected internal override Type Type 
+		public Type Type { get; private set; }
+
+		/// <summary>
+		/// Gets the byte array.
+		/// </summary>
+		/// <value>The byte array.</value>
+		public byte[] ByteArray { get; private set; }
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Pulsar.PackageItem"/> class.
+		/// </summary>
+		/// <param name="type">Type.</param>
+		/// <param name="key">Key.</param>
+		/// <param name="assetName">Asset name.</param>
+		internal PackageItem (Type type, string key, string assetName)
 		{
-			get 
-			{
-				return typeof(Font);
-			}
+			Type = type;
+			Key = key;
+			ByteArray = File.ReadAllBytes(assetName);
 		}
 	}
 }

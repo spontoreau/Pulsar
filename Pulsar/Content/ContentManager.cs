@@ -154,7 +154,22 @@ namespace Pulsar.Content
 		/// <param name="o">Object to add</param>
 		internal void AddContent(string key, object o)
 		{
+			if(!CanResolve(o.GetType()))
+				throw new ContentLoadException(string.Format("Can't find a resolver for resource {0}", key));
+
 			Assets.Add(key, o);
+		}
+
+		/// <summary>
+		/// True if ContentManager can resolve a specific
+		/// </summary>
+		/// <returns><c>true</c> if this instance can resolve the specified type; otherwise, <c>false</c>.</returns>
+		/// <param name="type">Type.</param>
+		public bool CanResolve(Type type)
+		{
+			return (from r in Resolvers
+				where r.Key == type
+			        select r).Any ();
 		}
 
         /// <summary>

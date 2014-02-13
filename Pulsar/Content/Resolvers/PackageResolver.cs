@@ -24,26 +24,24 @@
  */
 
 using System;
-using Pulsar.Content;
-using SFML.Graphics;
 
 namespace Pulsar.Content.Resolvers
 {
 	/// <summary>
-	/// Resolver for Font file type
+	/// Package resolver.
 	/// </summary>
-	public class FontResolver : ContentResolver
+	public class PackageResolver : ContentResolver
 	{
 		/// <summary>
 		/// Load a content from a asset file name
 		/// </summary>
 		/// <param name="assetFileName">Asset name, relative to the loader root directory, and including the file extension.</param>
-		/// <returns>Return a Font instance corresponding to the asset file name</returns>
+		/// <returns>Return a Package instance corresponding to the asset file name</returns>
 		public override object Load(string assetFileName)
 		{
 			try
 			{
-				return new Font(assetFileName);
+				return Package.Load(assetFileName);
 			}
 			catch(Exception ex) 
 			{
@@ -59,7 +57,7 @@ namespace Pulsar.Content.Resolvers
 		{
 			get 
 			{
-				return typeof(Font);
+				return typeof(Package);
 			}
 		}
 	}

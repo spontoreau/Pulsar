@@ -27,7 +27,7 @@ using System;
 using Pulsar.Content;
 using SFML.Graphics;
 
-namespace Pulsar
+namespace Pulsar.Content.Resolvers
 {
 	/// <summary>
 	/// Resolver for Texture file type

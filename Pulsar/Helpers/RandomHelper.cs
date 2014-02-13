@@ -25,7 +25,7 @@
 
 using System;
 
-namespace Pulsar
+namespace Pulsar.Helpers
 {
 	/// <summary>
 	/// Extension of the Random class.

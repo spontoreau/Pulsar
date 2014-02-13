@@ -27,7 +27,7 @@ using System;
 
 namespace Pulsar
 {
-/// <summary>
+	/// <summary>
 	/// Base class for all Pulsar game components. 
 	/// </summary>
 	public class GameComponent : IGameComponent, IUpdateable

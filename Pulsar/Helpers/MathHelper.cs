@@ -25,9 +25,9 @@
 
 using System;
 
-namespace Pulsar
+namespace Pulsar.Helpers
 {
-/// <summary>
+	/// <summary>
 	/// Extensions of the Math class.
 	/// </summary>
 	public static class MathHelper

@@ -24,6 +24,7 @@
  */
 
 using System;
+using Pulsar.Helpers;
 
 namespace Pulsar
 {

@@ -39,13 +39,12 @@
     <Reference Include="sfmlnet-window-2">
       <HintPath>..\ExtLibs\sfmlnet-window-2.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="Rectangle.cs" />
-    <Compile Include="MathHelper.cs" />
-    <Compile Include="RandomHelper.cs" />
     <Compile Include="GameTime.cs" />
     <Compile Include="IGameComponent.cs" />
     <Compile Include="IUpdateable.cs" />
@@ -65,11 +64,19 @@
     <Compile Include="Content\Resolvers\FontResolver.cs" />
     <Compile Include="Content\Resolvers\TextureResolver.cs" />
     <Compile Include="Content\Resolvers\SoundResolver.cs" />
+    <Compile Include="Content\Package.cs" />
+    <Compile Include="Content\PackageItem.cs" />
+    <Compile Include="Helpers\RandomHelper.cs" />
+    <Compile Include="Helpers\MathHelper.cs" />
+    <Compile Include="Helpers\SerializerHelper.cs" />
+    <Compile Include="Helpers\ZipHelper.cs" />
+    <Compile Include="Content\Resolvers\PackageResolver.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Content\" />
     <Folder Include="Graphics\" />
     <Folder Include="Content\Resolvers\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
 </Project>
