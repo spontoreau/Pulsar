@@ -26,6 +26,7 @@
 using System;
 using Pulsar.Content;
 using SFML.Graphics;
+using System.IO;
 
 namespace Pulsar.Content.Resolvers
 {
@@ -48,6 +49,27 @@ namespace Pulsar.Content.Resolvers
 			catch(Exception ex)
 			{
 				throw new ContentLoadException ("Unsupport file format", ex);
+			}
+		}
+
+		/// <summary>
+		/// Load a content from a asset file name
+		/// </summary>
+		/// <param name="assetFileName">Asset name, relative to the loader root directory, and including the file extension.</param>
+		/// <returns>Return a object type corresponding</returns>
+		/// <param name="byteArray">Byte array.</param>
+		public override object Load (byte[] byteArray)
+		{
+			try
+			{
+				using(var stream = new MemoryStream(byteArray))
+				{
+					return new Texture(stream);
+				}
+			}
+			catch(Exception ex) 
+			{
+				throw new ContentLoadException ("Couldn't load texture file", ex);
 			}
 		}
 

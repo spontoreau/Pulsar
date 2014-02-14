@@ -49,6 +49,12 @@ namespace Pulsar.Content
 		/// <param name="assetFileName">Asset name, relative to the loader root directory, and including the file extension.</param>
 		/// <returns>Return a object type corresponding</returns>
 		public abstract object Load(string assetFileName);
+
+		/// <summary>
+		/// Load the specified byteArray.
+		/// </summary>
+		/// <param name="byteArray">Byte array.</param>
+		public abstract object Load(byte[] byteArray);
 	}
 }
 

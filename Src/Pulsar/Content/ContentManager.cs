@@ -161,6 +161,17 @@ namespace Pulsar.Content
 		}
 
 		/// <summary>
+		/// Find resolver for a specific type.
+		/// </summary>
+		/// <param name="type">Type.</param>
+		internal ContentResolver FindResolver(Type type)
+		{
+			return (from r in Resolvers
+				where r.Key == type
+				select r.Value).FirstOrDefault();
+		}
+
+		/// <summary>
 		/// True if ContentManager can resolve a specific
 		/// </summary>
 		/// <returns><c>true</c> if this instance can resolve the specified type; otherwise, <c>false</c>.</returns>

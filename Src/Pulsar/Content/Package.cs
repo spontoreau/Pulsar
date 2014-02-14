@@ -121,7 +121,16 @@ namespace Pulsar.Content
 
 			var compressByteArray = File.ReadAllBytes(filePath);
 
-			var compressSteam = new MemoryStream (compressByteArray);
+			return Load (compressByteArray);
+		}
+
+		/// <summary>
+		/// Load the specified byteArray.
+		/// </summary>
+		/// <param name="byteArray">Byte array.</param>
+		public static Package Load(byte[] byteArray)
+		{
+			var compressSteam = new MemoryStream (byteArray);
 			var uncompressByteArray = ZipHelper.Uncompress (compressSteam);
 			compressSteam.Close ();
 
