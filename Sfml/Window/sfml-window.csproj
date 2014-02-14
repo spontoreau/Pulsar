@@ -69,6 +69,7 @@
     <Compile Include="Vector2.cs" />
     <Compile Include="VideoMode.cs" />
     <Compile Include="Window.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
