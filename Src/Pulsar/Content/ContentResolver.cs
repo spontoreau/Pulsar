@@ -1,29 +1,5 @@
-/* License
- * 
- * The MIT License (MIT)
- *
- * Copyright (c) 2014, Sylvain PONTOREAU (pontoreau.sylvain@gmail.com)
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
 using System;
+using System.Linq;
 
 namespace Pulsar.Content
 {
@@ -33,28 +9,51 @@ namespace Pulsar.Content
 	public abstract class ContentResolver
 	{
 		/// <summary>
-		/// The content manager
+		/// Gets or sets the content.
 		/// </summary>
+		/// <value>The content.</value>
 		protected internal ContentManager Content { get; internal set; }
 
 		/// <summary>
-		/// Type manage by the resolver
+		/// Gets the type.
 		/// </summary>
 		/// <value>The type.</value>
 		protected internal abstract Type Type { get; } 
 
 		/// <summary>
-		/// Load a content from a asset file name
+		/// Gets the support file extensions.
 		/// </summary>
-		/// <param name="assetFileName">Asset name, relative to the loader root directory, and including the file extension.</param>
-		/// <returns>Return a object type corresponding</returns>
-		public abstract object Load(string assetFileName);
+		/// <value>The support file extensions.</value>
+		protected internal abstract string[] SupportFileExtensions { get;}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Pulsar.Content.ContentResolver"/> class.
+		/// </summary>
+		protected internal ContentResolver()
+		{
+		}
+
+		/// <summary>
+		/// Load the specified assetFile.
+		/// </summary>
+		/// <param name="assetFile">Asset file.</param>
+		protected internal abstract object Load(string assetFile);
 
 		/// <summary>
 		/// Load the specified byteArray.
 		/// </summary>
 		/// <param name="byteArray">Byte array.</param>
-		public abstract object Load(byte[] byteArray);
+		protected internal abstract object Load(byte[] byteArray);
+
+		/// <summary>
+		/// Determines whether this instance can resolve the specified file extension.
+		/// </summary>
+		/// <returns><c>true</c> if this instance can resolve the specified file extension; otherwise, <c>false</c>.</returns>
+		/// <param name="fileExtension">File extension.</param>
+		internal bool CanResolve(string fileExtension)
+		{
+			return SupportFileExtensions.Contains (fileExtension.ToUpper ());
+		}
 	}
 }
 

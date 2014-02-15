@@ -1,80 +1,17 @@
-/* License
- * 
- * The MIT License (MIT)
- *
- * Copyright (c) 2014, Sylvain PONTOREAU (pontoreau.sylvain@gmail.com)
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
 using System;
-using Pulsar.Content;
-using SFML.Graphics;
 using System.IO;
+using SFML.Graphics;
+using Pulsar.Content;
 
 namespace Pulsar.Content.Resolvers
 {
 	/// <summary>
-	/// Resolver for Font file type
+	/// Font resolver.
 	/// </summary>
 	public class FontResolver : ContentResolver
 	{
 		/// <summary>
-		/// Load a content from a asset file name
-		/// </summary>
-		/// <param name="assetFileName">Asset name, relative to the loader root directory, and including the file extension.</param>
-		/// <returns>Return a Font instance corresponding to the asset file name</returns>
-		public override object Load(string assetFileName)
-		{
-			try
-			{
-				return new Font(assetFileName);
-			}
-			catch(Exception ex) 
-			{
-				throw new ContentLoadException ("Unsupport file format", ex);
-			}
-		}
-			
-		/// <summary>
-		/// Load a content from a asset file name
-		/// </summary>
-		/// <param name="assetFileName">Asset name, relative to the loader root directory, and including the file extension.</param>
-		/// <returns>Return a object type corresponding</returns>
-		/// <param name="byteArray">Byte array.</param>
-		public override object Load (byte[] byteArray)
-		{
-			try
-			{
-				using(var stream = new MemoryStream(byteArray))
-				{
-					return new Font(stream);
-				}
-			}
-			catch(Exception ex) 
-			{
-				throw new ContentLoadException ("Couldn't load font file", ex);
-			}
-		}
-
-		/// <summary>
-		/// Type manage by the resolver
+		/// Gets the type.
 		/// </summary>
 		/// <value>The type.</value>
 		protected internal override Type Type 
@@ -82,6 +19,45 @@ namespace Pulsar.Content.Resolvers
 			get 
 			{
 				return typeof(Font);
+			}
+		}
+
+		/// <summary>
+		/// The _extensions.
+		/// </summary>
+		private string[] _extensions = new string[] { "TTF", "OTF" };
+
+		/// <summary>
+		/// Gets the support file extensions.
+		/// </summary>
+		/// <value>The support file extensions.</value>
+		protected internal override string[] SupportFileExtensions 
+		{
+			get 
+			{
+				return _extensions;
+			}
+		}
+			
+		/// <summary>
+		/// Load the specified assetFile.
+		/// </summary>
+		/// <param name="assetFile">Asset file.</param>
+		protected internal override object Load(string assetFile)
+		{
+			return new Font(assetFile);
+		}
+			
+		/// <summary>
+		/// Load the specified assetFile.
+		/// </summary>
+		/// <param name="assetFile">Asset file.</param>
+		/// <param name="byteArray">Byte array.</param>
+		protected internal override object Load (byte[] byteArray)
+		{
+			using(var stream = new MemoryStream(byteArray))
+			{
+				return new Font(stream);
 			}
 		}
 	}

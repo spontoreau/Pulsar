@@ -1,43 +1,21 @@
-/* License
- * 
- * The MIT License (MIT)
- *
- * Copyright (c) 2014, Sylvain PONTOREAU (pontoreau.sylvain@gmail.com)
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text.RegularExpressions;
 using Pulsar.Helpers;
 
 namespace Pulsar.Content
 {
 	/// <summary>
-	/// Define a compress package of texture
+	/// Package.
 	/// </summary>
 	[Serializable]
 	public class Package
 	{
+		/// <summary>
+		/// The package file extension.
+		/// </summary>
 		private const string PackageFileExtension = ".ppk";
 
 		/// <summary>
@@ -67,7 +45,7 @@ namespace Pulsar.Content
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Pulsar.Content.Package"/> class.
 		/// </summary>
-		/// <param name="name">Name. Must contains only numeric and char</param>
+		/// <param name="name">Name.</param>
 		public Package (string name)
 		{
 			var regex = new Regex ("^[a-zA-Z0-9]+$");
@@ -77,18 +55,20 @@ namespace Pulsar.Content
 
 			Items = new List<PackageItem> ();
 		}
-
+			
 		/// <summary>
-		/// Add the specified assetFileName.
+		/// Add the specified type, key and assetFile.
 		/// </summary>
-		/// <param name="assetFileName">Asset file name.</param>
-		public void Add(Type type, string key, string assetFileName)
+		/// <param name="type">Type.</param>
+		/// <param name="key">Key.</param>
+		/// <param name="assetFile">Asset file.</param>
+		public void Add(Type type, string key, string assetFile)
 		{
-			Items.Add(new PackageItem (type, key, assetFileName));
+			Items.Add(new PackageItem (type, key, assetFile));
 		}
 
 		/// <summary>
-		/// Save package at specific path.
+		/// Save the specified package and path.
 		/// </summary>
 		/// <param name="package">Package.</param>
 		/// <param name="path">Path.</param>
@@ -111,17 +91,17 @@ namespace Pulsar.Content
 		}
 
 		/// <summary>
-		/// Load the specified package from file path.
+		/// Load the specified filePath.
 		/// </summary>
-		/// <param name="filePath">File Path.</param>
+		/// <param name="filePath">File path.</param>
 		public static Package Load(string filePath)
 		{
 			if (!File.Exists (filePath))
-				throw new Exception ("Path not exist");
+				throw new Exception ("File not exist");
 
 			var compressByteArray = File.ReadAllBytes(filePath);
 
-			return Load (compressByteArray);
+			return Load(compressByteArray);
 		}
 
 		/// <summary>
@@ -132,12 +112,11 @@ namespace Pulsar.Content
 		{
 			var compressSteam = new MemoryStream (byteArray);
 			var uncompressByteArray = ZipHelper.Uncompress (compressSteam);
-			compressSteam.Close ();
+			compressSteam.Close();
 
 			using (var stream = new MemoryStream (uncompressByteArray)) 
 			{
 				var formatter = new BinaryFormatter();
-				//Deserialize the storable entity.
 				return (Package)formatter.Deserialize(stream);
 			}
 		}
