@@ -62,6 +62,8 @@
     <Compile Include="Helpers\SerializerHelper.cs" />
     <Compile Include="Helpers\ZipHelper.cs" />
     <Compile Include="Content\Resolvers\PackageResolver.cs" />
+    <Compile Include="Graphics\TextBatch.cs" />
+    <Compile Include="Graphics\ShapeBatch.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
