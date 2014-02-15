@@ -36,4 +36,7 @@
   <ItemGroup>
     <Compile Include="Test.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
 </Project>

@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sfml-window", "Sfml\Window\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pulsar", "Src\Pulsar\Pulsar.csproj", "{0CAF341F-7ACB-461E-9848-4454B447FAE7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{E693BAA4-4EB3-49DB-BEF9-367F56FFCA2D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PulsarContent", "Samples\PulsarContent\PulsarContent.csproj", "{91B134E9-652F-4663-98B3-D0DDB7D8D9ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +81,18 @@ Global
 		{5119E0B0-9B2F-4900-A919-9F1B6293E689}.Release|x64.Build.0 = Release|Any CPU
 		{5119E0B0-9B2F-4900-A919-9F1B6293E689}.Release|x86.ActiveCfg = Release|Any CPU
 		{5119E0B0-9B2F-4900-A919-9F1B6293E689}.Release|x86.Build.0 = Release|Any CPU
+		{91B134E9-652F-4663-98B3-D0DDB7D8D9ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91B134E9-652F-4663-98B3-D0DDB7D8D9ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91B134E9-652F-4663-98B3-D0DDB7D8D9ED}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{91B134E9-652F-4663-98B3-D0DDB7D8D9ED}.Debug|x64.Build.0 = Debug|Any CPU
+		{91B134E9-652F-4663-98B3-D0DDB7D8D9ED}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{91B134E9-652F-4663-98B3-D0DDB7D8D9ED}.Debug|x86.Build.0 = Debug|Any CPU
+		{91B134E9-652F-4663-98B3-D0DDB7D8D9ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91B134E9-652F-4663-98B3-D0DDB7D8D9ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91B134E9-652F-4663-98B3-D0DDB7D8D9ED}.Release|x64.ActiveCfg = Release|Any CPU
+		{91B134E9-652F-4663-98B3-D0DDB7D8D9ED}.Release|x64.Build.0 = Release|Any CPU
+		{91B134E9-652F-4663-98B3-D0DDB7D8D9ED}.Release|x86.ActiveCfg = Release|Any CPU
+		{91B134E9-652F-4663-98B3-D0DDB7D8D9ED}.Release|x86.Build.0 = Release|Any CPU
 		{9EBF6B85-E221-4EC2-B53B-8D6C47F8ED6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9EBF6B85-E221-4EC2-B53B-8D6C47F8ED6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9EBF6B85-E221-4EC2-B53B-8D6C47F8ED6F}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -108,8 +124,9 @@ Global
 		{0B202C4D-A457-47FE-84A3-031DD878C6BE} = {041D3A84-F67B-469B-975B-8D473E03DE4C}
 		{46786269-57B9-48E7-AA4F-8F4D84609FE6} = {041D3A84-F67B-469B-975B-8D473E03DE4C}
 		{D17DE83D-A592-461F-8AF2-53F9E22E1D0F} = {041D3A84-F67B-469B-975B-8D473E03DE4C}
+		{91B134E9-652F-4663-98B3-D0DDB7D8D9ED} = {E693BAA4-4EB3-49DB-BEF9-367F56FFCA2D}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Test\Pulsar.Test\Pulsar.Test.csproj
+		StartupItem = Samples\PulsarContent\PulsarContent.csproj
 	EndGlobalSection
 EndGlobal

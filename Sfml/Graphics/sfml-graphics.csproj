@@ -8,7 +8,6 @@
     <ProjectGuid>{46786269-57B9-48E7-AA4F-8F4D84609FE6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>SFML.Graphics</RootNamespace>
-    <AssemblyName>sfmlnet-graphics-2</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <ReleaseVersion>2.1</ReleaseVersion>
     <SynchReleaseVersion>false</SynchReleaseVersion>
@@ -21,8 +20,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>sfml-graphics</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
@@ -34,6 +33,7 @@
     <DocumentationFile>..\..\doc\build\graphics-doc.xml</DocumentationFile>
     <PlatformTarget>x86</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>sfmlnet-graphics-2</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,6 +46,7 @@
     <DocumentationFile>..\..\doc\build\graphics-doc.xml</DocumentationFile>
     <PlatformTarget>x64</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>sfmlnet-graphics-2</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <DebugType>pdbonly</DebugType>
@@ -57,6 +58,7 @@
     <DocumentationFile>..\..\doc\build\graphics-doc.xml</DocumentationFile>
     <PlatformTarget>x64</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>sfmlnet-graphics-2</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BlendMode.cs" />
@@ -96,5 +98,10 @@
       <Project>{D17DE83D-A592-461F-8AF2-53F9E22E1D0F}</Project>
       <Name>sfml-window</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="app.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

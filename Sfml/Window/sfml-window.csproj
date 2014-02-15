@@ -8,7 +8,6 @@
     <ProjectGuid>{D17DE83D-A592-461F-8AF2-53F9E22E1D0F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>SFML.Window</RootNamespace>
-    <AssemblyName>sfmlnet-window-2</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -19,8 +18,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>sfml-window</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
@@ -32,6 +31,7 @@
     <DocumentationFile>..\..\doc\build\window-doc.xml</DocumentationFile>
     <PlatformTarget>x86</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>sfmlnet-window-2</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,6 +44,7 @@
     <DocumentationFile>..\..\doc\build\window-doc.xml</DocumentationFile>
     <PlatformTarget>x64</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>sfmlnet-window-2</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <DebugType>pdbonly</DebugType>
@@ -55,6 +56,7 @@
     <DocumentationFile>..\..\doc\build\window-doc.xml</DocumentationFile>
     <PlatformTarget>x64</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>sfmlnet-window-2</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ContextSettings.cs" />
@@ -75,4 +77,9 @@
     <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Content Include="app.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>
