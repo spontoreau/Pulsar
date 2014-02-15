@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using Pulsar.Helpers;
 
-namespace Pulsar.Test
+namespace Pulsar.Helpers
 {
 	[TestFixture]
 	public class MathHelperTest
@@ -269,4 +269,3 @@ namespace Pulsar.Test
 		}
 	}
 }
-

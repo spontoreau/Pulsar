@@ -1,28 +1,3 @@
-/* License
- * 
- * The MIT License (MIT)
- *
- * Copyright (c) 2014, Sylvain PONTOREAU (pontoreau.sylvain@gmail.com)
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -30,15 +5,20 @@ using System.Xml.Serialization;
 
 namespace Pulsar.Helpers
 {
+	/// <summary>
+	/// Serializer helper.
+	/// </summary>
 	public static class SerializerHelper
 	{
+		/// <summary>
+		/// The xml extension.
+		/// </summary>
 		private const string XmlExtension = ".xml";
 
 		/// <summary>
-		/// Load a serializable object from a file.
+		/// Load object T type from file path.
 		/// </summary>
-		/// <param name="path">Path of the file to load.</param>
-		/// <returns>Serialize Object corresponding to the path.</returns>
+		/// <param name="filePath">File path.</param>
 		public static T Load<T>(string filePath)
 		{
 			try
@@ -63,58 +43,40 @@ namespace Pulsar.Helpers
 		}
 
 		/// <summary>
-		/// Load a serializable object from a binary file.
+		/// Loads object from binary.
 		/// </summary>
-		/// <param name="path">Path of the file to load.</param>
-		/// <returns>Serialize Object corresponding to the path.</returns>
+		/// <returns>Object</returns>
+		/// <param name="filePath">File path.</param>
 		private static object LoadBinary(string filePath)
 		{
-			Stream stream = null;
-
-			try
+			using(var stream = File.Open(filePath, FileMode.Open))
 			{
-				//Open stream in open mode.
-				stream = File.Open(filePath, FileMode.Open);
-				//Binary Formatter instance.
 				var formatter = new BinaryFormatter();
-				//Deserialize the storable entity.
 				return formatter.Deserialize(stream);
 			}
-			finally
-			{
-				//Finally application close the stream.
-				if (stream != null)
-					stream.Close();
-			}
 		}
 
 		/// <summary>
-		/// Load a serializable object from a xml file.
+		/// Loads object from xml.
 		/// </summary>
-		/// <param name="path">Path of the file to load.</param>
-		/// <returns>Serialize Object corresponding to the path.</returns>
+		/// <returns>Object.</returns>
+		/// <param name="filePath">File path.</param>
+		/// <param name="type">Type.</param>
 		private static object LoadXml(string filePath, Type type)
 		{
-			TextReader reader = null;
+			var serializer = new XmlSerializer(type);
 
-			try
+			using(var reader = new StreamReader(filePath))
 			{
-				var serializer = new XmlSerializer(type);
-				reader = new StreamReader(filePath);
 				return serializer.Deserialize(reader);
-			}
-			finally
-			{
-				if (reader != null)
-					reader.Close();
 			}
 		}
 
 		/// <summary>
-		/// Save a serializable object.
+		/// Save the specified obj at file path.
 		/// </summary>
-		/// <param name="filePath">path to save the serializable object.</param>
-		/// <param name="obj">Object to serialize</param>
+		/// <param name="filePath">File path.</param>
+		/// <param name="obj">Object.</param>
 		public static void Save(string filePath, object obj)
 		{
 			try
@@ -131,51 +93,32 @@ namespace Pulsar.Helpers
 		}
 
 		/// <summary>
-		/// Save a serializable object into a binary file.
+		/// Saves object to binary.
 		/// </summary>
-		/// <param name="filePath">path to save the serializable object.</param>
-		/// <param name="obj">Object to serialize</param>
+		/// <param name="filePath">File path.</param>
+		/// <param name="obj">Object.</param>
 		private static void SaveBinary(string filePath, object obj)
 		{
-			Stream stream = null;
-
-			try
+			using (var stream = File.Open (filePath, FileMode.OpenOrCreate)) 
 			{
-				//Open the stream in OpenOrCreate mode
-				stream = File.Open(filePath, FileMode.OpenOrCreate);
-				//Binary Formatter instance
 				var formatter = new BinaryFormatter();
-				//Serialize the storable entity
 				formatter.Serialize(stream, obj);
-			}
-			finally
-			{
-				//close the stream
-				if (stream != null)
-					stream.Close();
 			}
 		}
 
 		/// <summary>
-		/// Save a serializable object into a Xml file.
+		/// Saves object to xml.
 		/// </summary>
-		/// <param name="filePath">path to save the serializable object.</param>
-		/// <param name="obj">Object to serialize</param>
+		/// <param name="filePath">File path.</param>
+		/// <param name="obj">Object.</param>
 		private static void SaveXml(string filePath, object obj)
 		{
-			TextWriter writer = null;
-			try
+			var serializer = new XmlSerializer(obj.GetType());
+
+			using (var writer = new StreamWriter (filePath)) 
 			{
-				var serializer = new XmlSerializer(obj.GetType());
-				writer = new StreamWriter(filePath);
 				serializer.Serialize(writer, obj);
-			}
-			finally
-			{
-				if (writer != null)
-					writer.Close();
 			}
 		}
 	}
 }
-

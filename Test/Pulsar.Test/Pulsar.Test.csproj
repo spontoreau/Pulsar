@@ -35,6 +35,8 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Compile Include="Helpers\MathHelperTest.cs" />
+    <Compile Include="Helpers\ZipHelperTest.cs" />
+    <Compile Include="Helpers\SerializerHelperTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />

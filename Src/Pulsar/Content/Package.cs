@@ -84,7 +84,8 @@ namespace Pulsar.Content
 				var formatter = new BinaryFormatter ();
 				formatter.Serialize (stream, package);
 
-				var compressByteArray = ZipHelper.Compress (stream);
+				var byteArray = stream.ToArray ();
+				var compressByteArray = ZipHelper.Compress (ref byteArray);
 
 				File.WriteAllBytes (completeFilePath, compressByteArray);
 			}
@@ -101,18 +102,16 @@ namespace Pulsar.Content
 
 			var compressByteArray = File.ReadAllBytes(filePath);
 
-			return Load(compressByteArray);
+			return Load(ref compressByteArray);
 		}
 
 		/// <summary>
 		/// Load the specified byteArray.
 		/// </summary>
 		/// <param name="byteArray">Byte array.</param>
-		public static Package Load(byte[] byteArray)
+		public static Package Load(ref byte[] byteArray)
 		{
-			var compressSteam = new MemoryStream (byteArray);
-			var uncompressByteArray = ZipHelper.Uncompress (compressSteam);
-			compressSteam.Close();
+			var uncompressByteArray = ZipHelper.Uncompress (ref byteArray);
 
 			using (var stream = new MemoryStream (uncompressByteArray)) 
 			{

@@ -57,7 +57,7 @@ namespace Pulsar.Content.Resolvers
 		/// <param name="byteArray">Byte array.</param>
 		protected internal override object Load (byte[] byteArray)
 		{
-			var ppk = Package.Load(byteArray);
+			var ppk = Package.Load(ref byteArray);
 
 			foreach(var item in ppk.Items)
 				Load(item);

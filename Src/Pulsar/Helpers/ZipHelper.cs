@@ -1,28 +1,3 @@
-/* License
- * 
- * The MIT License (MIT)
- *
- * Copyright (c) 2014, Sylvain PONTOREAU (pontoreau.sylvain@gmail.com)
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
 using System;
 using System.IO;
 using System.IO.Compression;
@@ -30,50 +5,32 @@ using System.IO.Compression;
 namespace Pulsar.Helpers
 {
 	/// <summary>
-	/// ZipHelper for stream compression and uncompression operation.
+	/// Zip helper.
 	/// </summary>
 	public static class ZipHelper
 	{
 		/// <summary>
-		/// Compress a stream.
+		/// Compress the specified byteArray.
 		/// </summary>
-		/// <param name="stream">The stream to compress.</param>
-		/// <returns>Byte array representation of the compressed stream.</returns>
-		public static byte[] Compress(Stream stream)
+		/// <param name="byteArray">Byte array.</param>
+		public static byte[] Compress(ref byte[] byteArray)
 		{
-			GZipStream gZipStream = null;
-			byte[] compressByteArray = null;
-			MemoryStream outStream = new MemoryStream();
-			try
+			using(var stream = new MemoryStream(byteArray))
 			{
-				byte[] buffer = new byte[stream.Length];
-				int bufferRead = 0;
-
-				gZipStream = new GZipStream(outStream, CompressionMode.Compress);
-
-				bufferRead = stream.Read(buffer, 0, buffer.Length);
-				gZipStream.Write(buffer, 0, bufferRead);
-				gZipStream.Close();
-				compressByteArray = outStream.ToArray();
-			}
-			catch (Exception ex)
-			{
-				throw new Exception("Compress failed", ex);
-			}
-			finally
-			{
-				if (gZipStream != null)
+				using (var outStream = new MemoryStream ()) 
 				{
-					gZipStream.Close();
-				}
+					var buffer = new byte[stream.Length];
+					var bufferRead = 0;
 
-				if (outStream != null)
-				{
-					outStream.Close();
+					using (var gZipStream = new GZipStream (outStream, CompressionMode.Compress)) 
+					{
+						bufferRead = stream.Read(buffer, 0, buffer.Length);
+						gZipStream.Write(buffer, 0, bufferRead);
+					}
+
+					return outStream.ToArray();
 				}
 			}
-
-			return compressByteArray;
 		}
 
 		/// <summary>
@@ -81,44 +38,32 @@ namespace Pulsar.Helpers
 		/// </summary>
 		/// <param name="stream">The stream to uncompress.</param>
 		/// <returns>Byte array representation of the uncompressed stream.</returns>
-		public static byte[] Uncompress(Stream stream)
+		public static byte[] Uncompress(ref byte[] byteArray)
 		{
-			GZipStream gZipStream = null;
-			int bufferLen = 1024;
-			int numberRead = 0;
-
-			byte[] decompressByteArray = new byte[bufferLen];
-			MemoryStream decompressedStream = new MemoryStream();
-
-			byte[] resultByteArray = null;
-
-			try
+			using(var stream = new MemoryStream(byteArray))
 			{
-				gZipStream = new GZipStream(stream, CompressionMode.Decompress);
-				do
+				using (var decompressedStream = new MemoryStream ()) 
 				{
-					numberRead = gZipStream.Read(decompressByteArray, 0, decompressByteArray.Length);
-					decompressedStream.Write(decompressByteArray, 0, numberRead);
-				}
-				while (numberRead > 0);
+					var bufferLen = 1024;
+					var numberRead = 0;
 
-				gZipStream.Close();
+					var decompressByteArray = new byte[bufferLen];
 
-				resultByteArray = decompressedStream.ToArray();
-			}
-			catch (Exception ex)
-			{
-				throw new Exception("Uncompress failed", ex);
-			}
-			finally
-			{
-				if (gZipStream != null)
-				{
-					gZipStream.Close();
+					using (var gZipStream = new GZipStream (stream, CompressionMode.Decompress)) 
+					{
+						do
+						{
+							numberRead = gZipStream.Read(decompressByteArray, 0, decompressByteArray.Length);
+							decompressedStream.Write(decompressByteArray, 0, numberRead);
+						}
+						while (numberRead > 0);
+
+						gZipStream.Close();
+
+						return decompressedStream.ToArray();
+					}
 				}
 			}
-
-			return resultByteArray;
 		}
 	}
 }
