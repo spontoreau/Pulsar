@@ -34,9 +34,15 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Compile Include="Test.cs" />
+    <Compile Include="Helpers\MathHelperTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Src\Pulsar\Pulsar.csproj">
+      <Project>{0CAF341F-7ACB-461E-9848-4454B447FAE7}</Project>
+      <Name>Pulsar</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
