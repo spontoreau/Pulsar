@@ -1,65 +1,44 @@
-/* License
- * 
- * The MIT License (MIT)
- *
- * Copyright (c) 2014, Sylvain PONTOREAU (pontoreau.sylvain@gmail.com)
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
 using System;
 using Pulsar.Helpers;
 
 namespace Pulsar
 {
 	/// <summary>
-	/// Four value color
+	/// Color.
 	/// </summary>
 	[Serializable]
 	public sealed class Color : ICloneable, IEquatable<Color>
 	{
 		/// <summary>
-		/// Alpha value
+		/// Gets or sets alpha.
 		/// </summary>
+		/// <value>Alpha.</value>
 		public byte A { get; set;}
 
 		/// <summary>
-		/// Red value
+		/// Gets or sets the red.
 		/// </summary>
+		/// <value>The red.</value>
 		public byte R { get; set;}
 
 		/// <summary>
-		/// Green value
+		/// Gets or sets the green.
 		/// </summary>
+		/// <value>The green.</value>
 		public byte G { get; set;}
 
 		/// <summary>
-		/// Blue value
+		/// Gets or sets the blue.
 		/// </summary>
+		/// <value>The blue.</value>
 		public byte B { get; set;}
 
 		/// <summary>
-		/// Create a new instance of Color
+		/// Initializes a new instance of the <see cref="Pulsar.Color"/> class.
 		/// </summary>
-		/// <param name="r">Red value</param>
-		/// <param name="g">Green value</param>
-		/// <param name="b">Blue value</param>
+		/// <param name="r">The red component.</param>
+		/// <param name="g">The green component.</param>
+		/// <param name="b">The blue component.</param>
 		public Color(byte r, byte g, byte b)
 			: this(r, g, b, 255)
 		{
@@ -67,12 +46,12 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// Create a new instance of Color
+		/// Initializes a new instance of the <see cref="Pulsar.Color"/> class.
 		/// </summary>
-		/// <param name="r">Red value</param>
-		/// <param name="g">Green value</param>
-		/// <param name="b">Blue value</param>
-		/// <param name="a">Alpha value</param>
+		/// <param name="r">The red component.</param>
+		/// <param name="g">The green component.</param>
+		/// <param name="b">The blue component.</param>
+		/// <param name="a">The alpha component.</param>
 		public Color(byte r, byte g, byte b, byte a)
 		{
 			R = r;
@@ -82,8 +61,9 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// Black color
+		/// Gets the black color.
 		/// </summary>
+		/// <value>The black color.</value>
 		public static Color Black
 		{
 			get
@@ -93,8 +73,9 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// White color
+		/// Gets the white color.
 		/// </summary>
+		/// <value>The white color.</value>
 		public static Color White
 		{
 			get
@@ -104,8 +85,9 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// Red color
+		/// Gets the red color.
 		/// </summary>
+		/// <value>The red color.</value>
 		public static Color Red
 		{
 			get
@@ -115,8 +97,9 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// Green color
+		/// Gets the green color.
 		/// </summary>
+		/// <value>The green color.</value>
 		public static Color Green
 		{
 			get
@@ -126,8 +109,9 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// Blue color
+		/// Gets the blue color.
 		/// </summary>
+		/// <value>The blue color.</value>
 		public static Color Blue
 		{
 			get
@@ -137,8 +121,9 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// Yellow color
+		/// Gets the yellow color.
 		/// </summary>
+		/// <value>The yellow color.</value>
 		public static Color Yellow
 		{
 			get
@@ -148,8 +133,9 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// Magenta color
+		/// Gets the magenta color.
 		/// </summary>
+		/// <value>The magenta color.</value>
 		public static Color Magenta
 		{
 			get
@@ -159,8 +145,9 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// Cyan color
+		/// Gets the cyan color.
 		/// </summary>
+		/// <value>The cyan color.</value>
 		public static Color Cyan
 		{
 			get
@@ -170,8 +157,9 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// Transparent color
+		/// Gets the transparent color.
 		/// </summary>
+		/// <value>The transparent color.</value>
 		public static Color Transparent
 		{
 			get
@@ -181,20 +169,19 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// Clone the color
+		/// Clone this instance.
 		/// </summary>
-		/// <returns>Cloned color</returns>
 		public object Clone()
 		{
 			return new Color(R, G, B, A);
 		}
 
-
 		/// <summary>
-		/// Returns a value that indicates whether the current instance is equal to a specified object.
+		/// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="Pulsar.Color"/>.
 		/// </summary>
-		/// <param name="obj">Object to make the comparison with.</param>
-		/// <returns>true if the current instance is equal to the specified object; false otherwise.</returns>
+		/// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="Pulsar.Color"/>.</param>
+		/// <returns><c>true</c> if the specified <see cref="System.Object"/> is equal to the current <see cref="Pulsar.Color"/>;
+		/// otherwise, <c>false</c>.</returns>
 		public override bool Equals(object obj)
 		{
 		    var a = obj as Color;
@@ -202,10 +189,11 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// True if the passing color is equal to this color.
+		/// Determines whether the specified <see cref="Pulsar.Color"/> is equal to the current <see cref="Pulsar.Color"/>.
 		/// </summary>
-		/// <param name="other">The other color.</param>
-		/// <returns>True if the passing color is equal to this color.</returns>
+		/// <param name="other">The <see cref="Pulsar.Color"/> to compare with the current <see cref="Pulsar.Color"/>.</param>
+		/// <returns><c>true</c> if the specified <see cref="Pulsar.Color"/> is equal to the current <see cref="Pulsar.Color"/>;
+		/// otherwise, <c>false</c>.</returns>
 		public bool Equals(Color other)
 		{
 			if (this == other)
@@ -215,12 +203,12 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// Linear interpolation between two color on the RGB channel
+		/// Lerp the color on rgb.
 		/// </summary>
-		/// <param name="value1">Color 1</param>
-		/// <param name="value2">Color 2</param>
-		/// <param name="amount">Amout to interpolate between the two colors</param>
-		/// <returns>Color corresponding to the lerp operation</returns>
+		/// <returns>The rgb lerp color.</returns>
+		/// <param name="value1">Value1.</param>
+		/// <param name="value2">Value2.</param>
+		/// <param name="amount">Amount.</param>
 		public static Color LerpRgb(Color value1, Color value2, float amount)
 		{
 			return new Color(
@@ -230,12 +218,12 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// Linear interpolation between two color on the ARGB channel
+		/// Lerp the color on argb.
 		/// </summary>
-		/// <param name="value1">Color 1</param>
-		/// <param name="value2">Color 2</param>
-		/// <param name="amount">Amout to interpolate between the two colors</param>
-		/// <returns>Color corresponding to the lerp operation</returns>
+		/// <returns>The argb color.</returns>
+		/// <param name="value1">Value1.</param>
+		/// <param name="value2">Value2.</param>
+		/// <param name="amount">Amount.</param>
 		public static Color LerpArgb(Color value1, Color value2, float amount)
 		{
 			return new Color(
@@ -245,32 +233,24 @@ namespace Pulsar
 				(byte)MathHelper.Lerp(value1.A, value2.A, amount));
 		}
 
-		/// <summary>
-		/// True if Color 2 is equal to Color 1
-		/// </summary>
-		/// <param name="c1">Color 1</param>
-		/// <param name="c2">Color 2</param>
-		/// <returns>True if Color 2 is equal to Vector 1</returns>
+		/// <param name="c1">C1.</param>
+		/// <param name="c2">C2.</param>
 		public static bool operator ==(Color c1, Color c2)
 		{
 			return c1 != null && c1.Equals(c2);
 		}
 
-		/// <summary>
-		/// True if Color 2 isn't equal to Color 1
-		/// </summary>
-		/// <param name="c1">Color 1</param>
-		/// <param name="c2">Color 2</param>
-		/// <returns>True if Color 2 isn't equal to Color 1</returns>
+		/// <param name="c1">C1.</param>
+		/// <param name="c2">C2.</param>
 		public static bool operator !=(Color c1, Color c2)
 		{
 			return c1 != null && !c1.Equals(c2);
 		}
 
 		/// <summary>
-		/// Gets the hash code for this object. 
+		/// Serves as a hash function for a <see cref="Pulsar.Color"/> object.
 		/// </summary>
-		/// <returns>Hash code for this object.</returns>
+		/// <returns>A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a hash table.</returns>
 		public override int GetHashCode()
 		{
 			return A * R * G * B;
