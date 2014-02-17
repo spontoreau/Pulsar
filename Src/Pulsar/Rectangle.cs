@@ -1,28 +1,3 @@
-/* License
- * 
- * The MIT License (MIT)
- *
- * Copyright (c) 2014, Sylvain PONTOREAU (pontoreau.sylvain@gmail.com)
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
 using System;
 
 namespace Pulsar
@@ -34,32 +9,33 @@ namespace Pulsar
 	public sealed class Rectangle : ICloneable, IEquatable<Rectangle>
 	{
 		/// <summary>
-		/// Gets or sets x coordinate of the Rectangle.
+		/// Gets or sets the x position.
 		/// </summary>
 		/// <value>The x.</value>
 		public float X { get; set; }
 
 		/// <summary>
-		/// Gets or sets y coordinate of the Rectangle.
+		/// Gets or sets the y position.
 		/// </summary>
 		/// <value>The y.</value>
 		public float Y { get; set;}
 
 		/// <summary>
-		/// Gets or sets width of the Rectangle.
+		/// Gets or sets the width.
 		/// </summary>
 		/// <value>The width.</value>
 		public float Width { get; set;}
 
 		/// <summary>
-		/// Gets or sets height of the Rectangle.
+		/// Gets or sets the height.
 		/// </summary>
 		/// <value>The height.</value>
 		public float Height { get ; set; }
 
 		/// <summary>
-		/// get an empty Rectangle
+		/// Gets a empty rectangle.
 		/// </summary>
+		/// <value>The empty rectangle.</value>
 		public static Rectangle Empty
 		{
 			get
@@ -69,8 +45,9 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// True if the rectangle is Empty
+		/// Gets a value indicating whether this instance is empty.
 		/// </summary>
+		/// <value><c>true</c> if this instance is empty; otherwise, <c>false</c>.</value>
 		public bool IsEmpty
 		{
 			get
@@ -80,8 +57,9 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// Get the position of the Rectangle
+		/// Gets the rectangle position.
 		/// </summary>
+		/// <value>The position.</value>
 		public Vector Position
 		{
 			get
@@ -91,8 +69,9 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// Get the centrer
+		/// Gets the rectangle center.
 		/// </summary>
+		/// <value>The center.</value>
 		public Vector Center
 		{
 			get
@@ -102,8 +81,9 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// Get X coordinate of the Rectangle Left
+		/// Gets the left.
 		/// </summary>
+		/// <value>The left.</value>
 		public float Left
 		{
 			get
@@ -113,8 +93,9 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// Get X coordinate of the Rectangle Right
+		/// Gets the right.
 		/// </summary>
+		/// <value>The right.</value>
 		public float Right
 		{
 			get
@@ -124,8 +105,9 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// Get Y coordinate of the Rectangle Top
+		/// Gets the top.
 		/// </summary>
+		/// <value>The top.</value>
 		public float Top
 		{
 			get
@@ -135,8 +117,9 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// Get Y coordinate of the Rectangle Bottom
+		/// Gets the bottom.
 		/// </summary>
+		/// <value>The bottom.</value>
 		public float Bottom
 		{
 			get
@@ -146,7 +129,7 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// Create a new instance of Rectangle.
+		/// Initializes a new instance of the <see cref="Pulsar.Rectangle"/> class.
 		/// </summary>
 		public Rectangle()
 		{
@@ -154,12 +137,12 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// Create a new instance of Rectangle.
+		/// Initializes a new instance of the <see cref="Pulsar.Rectangle"/> class.
 		/// </summary>
-		/// <param name="x">X position</param>
-		/// <param name="y">Y position</param>
-		/// <param name="width">Width size</param>
-		/// <param name="height">Height size</param>
+		/// <param name="x">The x coordinate.</param>
+		/// <param name="y">The y coordinate.</param>
+		/// <param name="width">Width.</param>
+		/// <param name="height">Height.</param>
 		public Rectangle(float x, float y, float width, float height)
 		{
 			X = x;
@@ -169,10 +152,10 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// Create a new instance of Rectangle
+		/// Initializes a new instance of the <see cref="Pulsar.Rectangle"/> class.
 		/// </summary>
-		/// <param name="position">Position vector</param>
-		/// <param name="size">Size vector</param>
+		/// <param name="position">Position.</param>
+		/// <param name="size">Size.</param>
 		public Rectangle(Vector position, Vector size)
 			: this(position.X, position.Y, size.X, size.Y)
 		{
@@ -180,41 +163,37 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// True if the Rectangle contains a vector.
+		/// Contains the specified vector.
 		/// </summary>
-		/// <param name="v">The vector.</param>
-		/// <returns>True if the Rectangle contains a vector.</returns>
+		/// <param name="v">Vector.</param>
 		public bool Contains(Vector v)
 		{
 			return (v.X >= X) && (v.X < Right) && (v.Y >= Y) && (v.Y < Bottom);
 		}
 
 		/// <summary>
-		/// True if the Rectangle contains an other Rectangle.
+		/// Contains the specified rectangle.
 		/// </summary>
-		/// <param name="r">Other Rectangle.</param>
-		/// <returns>True if the Rectangle contains an other Rectangle.</returns>
+		/// <param name="r">The rectangle.</param>
 		public bool Contains(Rectangle r)
 		{
 			return (r.X >= X) && (r.Right < Right) && (r.Y >= Y) && (r.Bottom < Bottom);
 		}
 
 		/// <summary>
-		/// True if Rectangle intersects an other Rectangle.
+		/// Intersects the specified rectangle.
 		/// </summary>
-		/// <param name="r">Other Rectangle.</param>
-		/// <returns>True if a Rectangle intersects this Rectangle.</returns>
+		/// <param name="r">The rectangle component.</param>
 		public bool Intersects(Rectangle r)
 		{
 			return (r.X < Right) && (r.Right > X) && (r.Y < Bottom) && (r.Bottom > Y);
 		}
 
 		/// <summary>
-		/// Get the union representation of 2 rectangles.
+		/// Union the specified r1 and r2.
 		/// </summary>
-		/// <param name="r1">Rectangle 1.</param>
-		/// <param name="r2">Rectangle 2.</param>
-		/// <returns>Rectangle representation of the union.</returns>
+		/// <param name="r1">R1.</param>
+		/// <param name="r2">R2.</param>
 		public static Rectangle Union(Rectangle r1, Rectangle r2)
 		{
 			var x = (r1.X < r2.X) ? r1.X : r2.X;
@@ -225,30 +204,31 @@ namespace Pulsar
 		}
 
 		/// <summary>
-		/// Clone the Rectangle.
+		/// Clone this instance.
 		/// </summary>
-		/// <returns>Cloned Rectangle.</returns>
 		public object Clone()
 		{
 			return new Rectangle(X, Y, Width, Height);
 		}
 
 		/// <summary>
-		/// Returns a value that indicates whether the current instance is equal to a specified object.
+		/// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="Pulsar.Rectangle"/>.
 		/// </summary>
-		/// <param name="obj">Object to make the comparison with.</param>
-		/// <returns>true if the current instance is equal to the specified object; false otherwise.</returns>
+		/// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="Pulsar.Rectangle"/>.</param>
+		/// <returns><c>true</c> if the specified <see cref="System.Object"/> is equal to the current <see cref="Pulsar.Rectangle"/>;
+		/// otherwise, <c>false</c>.</returns>
 		public override bool Equals(object obj)
 		{
 		    var r = obj as Rectangle;
 		    return r != null && Equals(r);
 		}
 
-	    /// <summary>
-		/// True if the passing Rectangle is equal to this Rectangle.
+		/// <summary>
+		/// Determines whether the specified <see cref="Pulsar.Rectangle"/> is equal to the current <see cref="Pulsar.Rectangle"/>.
 		/// </summary>
-		/// <param name="other">The other Rectangle.</param>
-		/// <returns>True if the passing Rectangle is equal to this Rectangle.</returns>
+		/// <param name="other">The <see cref="Pulsar.Rectangle"/> to compare with the current <see cref="Pulsar.Rectangle"/>.</param>
+		/// <returns><c>true</c> if the specified <see cref="Pulsar.Rectangle"/> is equal to the current
+		/// <see cref="Pulsar.Rectangle"/>; otherwise, <c>false</c>.</returns>
 		public bool Equals(Rectangle other)
 	    {
 	        if (this == other)
@@ -257,32 +237,24 @@ namespace Pulsar
 	        return X == other.X && Y == other.Y && Width == other.Width && Height == other.Height;
 	    }
 
-	    /// <summary>
-		/// True if Rectangle 2 is equal to Rectangle 1.
-		/// </summary>
-		/// <param name="r1">Rectangle 1.</param>
-		/// <param name="r2">Rectangle 2.</param>
-		/// <returns>True if Rectangle 2 is equal to Rectangle 1.</returns>
+		/// <param name="r1">R1.</param>
+		/// <param name="r2">R2.</param>
 		public static bool operator ==(Rectangle r1, Rectangle r2)
 		{
 			return r1 != null && r1.Equals(r2);
 		}
 
-		/// <summary>
-		/// True if Rectangle 2 isn't equal to Rectangle 1.
-		/// </summary>
-		/// <param name="r1">Rectangle 1.</param>
-		/// <param name="r2">Rectangle 2.</param>
-		/// <returns>True if Rectangle 2 isn't equal to Rectangle 1.</returns>
+		/// <param name="r1">R1.</param>
+		/// <param name="r2">R2.</param>
 		public static bool operator !=(Rectangle r1, Rectangle r2)
 		{
 			return r1 != null && !r1.Equals(r2);
 		}
 
 		/// <summary>
-		/// Gets the hash code for this object. 
+		/// Serves as a hash function for a <see cref="Pulsar.Rectangle"/> object.
 		/// </summary>
-		/// <returns>Hash code for this object.</returns>
+		/// <returns>A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a hash table.</returns>
 		public override int GetHashCode()
 		{
 			return Convert.ToInt32(X * Y * Width * Height);
