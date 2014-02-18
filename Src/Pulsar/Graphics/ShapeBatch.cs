@@ -1,7 +1,7 @@
 ﻿using System;
 using SFML.Graphics;
+using Pulsar.Helpers;
 
-//TODO complete implementation for ShapeBatcher
 namespace Pulsar.Graphics
 {
 	/// <summary>
@@ -15,11 +15,6 @@ namespace Pulsar.Graphics
 		private readonly RectangleShape _rectangle = new RectangleShape();
 
 		/// <summary>
-		/// The _circle.
-		/// </summary>
-		private readonly CircleShape _circle = new CircleShape();
-
-		/// <summary>
 		/// Initializes a new instance of the <see cref="Pulsar.Graphics.ShapeBatch"/> class.
 		/// </summary>
 		/// <param name="renderTarget">Render target.</param>
@@ -27,7 +22,65 @@ namespace Pulsar.Graphics
 			: base(renderTarget)
 		{
 
-		}        
+		}
+
+		/// <summary>
+		/// Draws the rectangle.
+		/// </summary>
+		/// <param name="rectangle">Rectangle.</param>
+		/// <param name="position">Position.</param>
+		/// <param name="fillColor">Fill color.</param>
+		/// <param name="borderColor">Border color.</param>
+		/// <param name="rotation">Rotation.</param>
+		/// <param name="origin">Origin.</param>
+		/// <param name="scale">Scale.</param>
+		public void DrawRectangle(Rectangle rectangle, Vector position, Color fillColor, Color borderColor, float rotation, Vector origin, float scale)
+		{
+			var p = _rectangle.Position;
+			p.X = position.X;
+			p.Y = position.X;
+			_rectangle.Position = p;
+
+			var fc = _rectangle.FillColor;
+			fc.A = fillColor.A;
+			fc.B = fillColor.B;
+			fc.G = fillColor.G;
+			fc.R = fillColor.R;
+			_rectangle.FillColor = fc;
+
+			var oc = _rectangle.OutlineColor;
+			oc.A = fillColor.A;
+			oc.B = fillColor.B;
+			oc.G = fillColor.G;
+			oc.R = fillColor.R;
+			_rectangle.FillColor = oc;
+
+			_rectangle.Rotation = MathHelper.ToDegrees(rotation);
+
+			var o = _rectangle.Origin;
+			o.X = origin.X;
+			o.Y = origin.Y;
+			_rectangle.Origin = o;
+
+			var s = _rectangle.Scale;
+			s.X = scale;
+			s.Y = scale;
+			_rectangle.Scale = s;
+
+			RenderTarget.Draw(_rectangle);
+		}
+
+		/// <summary>
+		/// Draws rectangle.
+		/// </summary>
+		/// <param name="rectangle">Rectangle.</param>
+		/// <param name="position">Position.</param>
+		/// <param name="fillColor">Fill color.</param>
+		/// <param name="borderColor">Border color.</param>
+		public void DrawRectangle(Rectangle rectangle, Vector position, Color fillColor, Color borderColor)
+		{
+			DrawRectangle (rectangle, position, fillColor, borderColor, 0, Vector.Zero, 0);
+		}
 	}
 }
 
