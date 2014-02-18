@@ -30,6 +30,7 @@ namespace Pulsar
 	/// <summary>
 	/// A game component that is notified when it needs to draw itself. 
 	/// </summary>
+	[Obsolete]
 	public class DrawableGameComponent : GameComponent, IDrawable
 	{
 		/// <summary>

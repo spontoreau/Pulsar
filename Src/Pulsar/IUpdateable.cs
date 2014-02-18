@@ -30,6 +30,7 @@ namespace Pulsar
 	/// <summary>
 	/// Defines an interface for a game component that should be updated in Game.Update. 
 	/// </summary>
+	[Obsolete]
 	public interface IUpdateable
 	{
 		/// <summary>

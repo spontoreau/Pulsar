@@ -31,6 +31,7 @@ namespace Pulsar
 	/// <summary>
 	/// A collection of game components.
 	/// </summary>
+	[Obsolete]
 	public sealed class GameComponentCollection : Collection<IGameComponent>
 	{
 		/// <summary>

@@ -30,6 +30,7 @@ namespace Pulsar
 	/// <summary>
 	/// Base class for all Pulsar game components. 
 	/// </summary>
+	[Obsolete]
 	public class GameComponent : IGameComponent, IUpdateable
 	{
 		/// <summary>

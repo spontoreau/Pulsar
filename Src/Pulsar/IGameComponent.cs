@@ -30,6 +30,7 @@ namespace Pulsar
 	/// <summary>
 	/// Defines an interface for game components. 
 	/// </summary>
+	[Obsolete]
 	public interface IGameComponent : IDisposable
 	{
 		/// <summary>

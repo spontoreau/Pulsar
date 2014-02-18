@@ -30,6 +30,7 @@ namespace Pulsar
 	/// <summary>
 	/// Defines the interface for a drawable game component. 
 	/// </summary>
+	//TODO need revision
 	public interface IDrawable
 	{
 		/// <summary>

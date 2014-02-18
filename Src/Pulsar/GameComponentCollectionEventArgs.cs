@@ -30,6 +30,7 @@ namespace Pulsar
 	/// <summary>
 	/// Arguments used with events from the GameComponentCollection.
 	/// </summary>
+	[Obsolete]
 	public sealed class GameComponentCollectionEventArgs : EventArgs
 	{
 		/// <summary>
