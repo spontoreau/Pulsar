@@ -1,8 +1,16 @@
 Pulsar
 ======
 
-2D Game framework build on top of SFML.Net
+Mono 2D Game framework.
 
+Development status    : Active
+Source code status    : Unstable
+Current game provider : SFML2
+
+Work on platform :
+- Windows : OK
+- Mac Osx : OK
+- Linux   : OK but not test
 
 ## Licence
 
