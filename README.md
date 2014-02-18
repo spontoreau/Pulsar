@@ -3,8 +3,10 @@ Pulsar
 
 Mono 2D Game framework.
 
-Development status    : Active
-Source code status    : Unstable
+Status :
+- Development : Active
+- Source code : Unstable
+
 Current game provider : SFML2
 
 Work on platform :
