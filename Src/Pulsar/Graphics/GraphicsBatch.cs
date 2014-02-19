@@ -1,22 +1,37 @@
 using SFML.Graphics;
 using SFML.Window;
+using Pulsar.Services;
 
 namespace Pulsar.Graphics
 {
 	/// <summary>
 	/// Graphics batcher.
 	/// </summary>
-	public abstract class GraphicsBatch
+	public abstract class GraphicsBatch : IGraphicsBatch
 	{
 		/// <summary>
 		/// The _view.
 		/// </summary>
-		private readonly View _view = new View();
+		private View _view = new View();
+
+		private RenderTarget _renderTarget;
 
 		/// <summary>
 		/// The render target.
 		/// </summary>
-		protected RenderTarget RenderTarget;
+		public RenderTarget RenderTarget
+		{
+			get
+			{
+				return _renderTarget;
+			}
+			set
+			{
+				_renderTarget = value;
+				_view = _renderTarget.GetView();
+				WindowContext.Created += WindowContext_Created;
+			}
+		}
 
 		/// <summary>
 		/// The states.
@@ -33,11 +48,9 @@ namespace Pulsar.Graphics
 		/// Initializes a new instance of the <see cref="Pulsar.Graphics.GraphicsBatch"/> class.
 		/// </summary>
 		/// <param name="renderTarget">Render target.</param>
-		protected GraphicsBatch(RenderTarget renderTarget)
+		protected GraphicsBatch()
 		{
-			RenderTarget = renderTarget;
-			_view = renderTarget.GetView();
-			WindowContext.Created += WindowContext_Created;
+
 		}
 
 		/// <summary>
@@ -57,33 +70,6 @@ namespace Pulsar.Graphics
 			_view.Rotate(rotation);
 			RenderTarget.SetView(_view);
 			HasBegin = true;
-		}
-
-		/// <summary>
-		/// Begin batching.
-		/// </summary>
-		/// <param name="blendMode">Blend mode.</param>
-		/// <param name="view">View.</param>
-		public void Begin(BlendMode blendMode, View view)
-		{
-			Begin(blendMode, view.Viewport, view.Center, view.Size, view.Rotation);
-		}
-
-		/// <summary>
-		/// Begin batching.
-		/// </summary>
-		/// <param name="blendMode">Blend mode.</param>
-		public void Begin(BlendMode blendMode)
-		{
-			Begin(blendMode, RenderTarget.GetView());
-		}
-
-		/// <summary>
-		/// Begin batching.
-		/// </summary>
-		public void Begin()
-		{
-			Begin(BlendMode.Alpha);
 		}
 
 		/// <summary>

@@ -2,13 +2,14 @@ using System;
 using SFML.Graphics;
 using SFML.Window;
 using Pulsar.Helpers;
+using Pulsar.Services;
 
 namespace Pulsar.Graphics
 {
 	/// <summary>
 	/// Sprite batcher.
 	/// </summary>
-	public sealed class SpriteBatch : GraphicsBatch
+	public sealed class SpriteBatch : GraphicsBatch, ISpriteBatch
 	{
 		/// <summary>
 		/// The _sprite.
@@ -19,8 +20,7 @@ namespace Pulsar.Graphics
 		/// Initializes a new instance of the <see cref="Pulsar.Graphics.SpriteBatch"/> class.
 		/// </summary>
 		/// <param name="renderTarget">Render target.</param>
-		internal SpriteBatch(RenderTarget renderTarget)
-			: base(renderTarget)
+		internal SpriteBatch()
 		{
 
 		}        
@@ -88,29 +88,6 @@ namespace Pulsar.Graphics
 		/// Draw the specified texture.
 		/// </summary>
 		/// <param name="texture">Texture.</param>
-		/// <param name="destination">Destination.</param>
-		/// <param name="source">Source.</param>
-		/// <param name="color">Color.</param>
-		public void Draw(Texture texture, Rectangle destination, Rectangle source, Color color)
-		{
-			Draw(texture, destination, source, color, 0f, Vector.Zero);
-		}
-
-		/// <summary>
-		/// Draw the specified texture.
-		/// </summary>
-		/// <param name="texture">Texture.</param>
-		/// <param name="destination">Destination.</param>
-		/// <param name="color">Color.</param>
-		public void Draw(Texture texture, Rectangle destination, Color color)
-		{
-			Draw(texture, destination, null, color);
-		}
-
-		/// <summary>
-		/// Draw the specified texture.
-		/// </summary>
-		/// <param name="texture">Texture.</param>
 		/// <param name="position">Position.</param>
 		/// <param name="source">Source.</param>
 		/// <param name="color">Color.</param>
@@ -167,31 +144,6 @@ namespace Pulsar.Graphics
 
 	        RenderTarget.Draw(_sprite);
 		}
-
-		/// <summary>
-		/// Draw a texture
-		/// </summary>
-		/// <param name="texture">Texture to draw</param>
-		/// <param name="position">Position of the texture</param>
-		/// <param name="source">Source rectangle in the texture to draw</param>
-		/// <param name="color">Global color</param>
-		public void Draw(Texture texture, Vector position, Rectangle source, Color color)
-		{
-			Draw(texture, position, source, color, 0f, Vector.Zero, 1.0f); 
-		}
-
-		/// <summary>
-		/// Draw a texture
-		/// </summary>
-		/// <param name="texture">Texture to draw</param>
-		/// <param name="position">Position of the texture</param>
-		/// <param name="color">Global color</param>
-		public void Draw(Texture texture, Vector position, Color color)
-		{
-			Draw(texture, position, null, color, 0f, Vector.Zero, 1.0f); 
-		}
-
-
 	}
 }
 

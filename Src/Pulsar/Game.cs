@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using Pulsar.Content;
+using Pulsar.Graphics;
 
 namespace Pulsar
 {
@@ -111,6 +112,9 @@ namespace Pulsar
 		/// <value>The content manager.</value>
 		//TODO no need to have the property here, ContentManager must have to be a service (next update to come)
 		public ContentManager Content { get; private set; }
+
+		//TODO no need to have the property here, SpriteBatcher must have to be a service (next update to come)
+		public SpriteBatch SpriteBatcher { get; private set;}
 
 		/// <summary>
 		/// Gets the components.
@@ -225,17 +229,18 @@ namespace Pulsar
 		/// <param name="gameTime">Game time.</param>
 		protected virtual void Draw(GameTime gameTime)
 		{
-			if (WindowContext.IsCreated)
-				WindowContext.Window.Clear();
-
-			foreach (IDrawable drawable in DrawableComponents)
+			if (WindowContext.IsCreated) 
 			{
-				if (drawable.Visible)
-					drawable.Draw(gameTime);
+				WindowContext.Window.Clear ();
+				
+				foreach (IDrawable drawable in DrawableComponents) {
+					if (drawable.Visible)
+						drawable.Draw (gameTime);
+				}
+
+				WindowContext.Window.Display ();
 			}
 
-			if (WindowContext.IsCreated)
-				WindowContext.Window.Display();
 		}
 
 		/// <summary>

@@ -1,11 +1,14 @@
 ﻿using System;
 using Pulsar;
 using SFML.Graphics;
+using Pulsar.Graphics;
 
 namespace PulsarContent
 {
 	public class GameTest : Game
 	{
+		private Texture Texture;
+
 		public GameTest ()
 			:base()
 		{
@@ -19,7 +22,7 @@ namespace PulsarContent
 
 			Content.LazyLoading = true;
 			var texture3 = Content.Load<Texture>("pulsar");
-			var texture4 = Content.Load<Texture>("Test/vtek");
+			Texture = Content.Load<Texture>("Test/vtek");
 
 			base.LoadContent ();
 		}

@@ -64,6 +64,15 @@
     <Compile Include="Content\Resolvers\PackageResolver.cs" />
     <Compile Include="Graphics\TextBatch.cs" />
     <Compile Include="Graphics\ShapeBatch.cs" />
+    <Compile Include="Services\IGraphicsBatch.cs" />
+    <Compile Include="Services\ISpriteBatch.cs" />
+    <Compile Include="Services\ITextBatch.cs" />
+    <Compile Include="Services\IShapeBatch.cs" />
+    <Compile Include="Services\IContentManager.cs" />
+    <Compile Include="Services\Extensions\GraphicsBatchExtensions.cs" />
+    <Compile Include="Services\Extensions\ShapeBatchExtensions.cs" />
+    <Compile Include="Services\Extensions\SpriteBatchExtensions.cs" />
+    <Compile Include="Services\Extensions\TextBatchExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -71,6 +80,7 @@
     <Folder Include="Graphics\" />
     <Folder Include="Content\Resolvers\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Sfml\Audio\sfml-audio.csproj">

@@ -1,13 +1,14 @@
 ﻿using System;
 using SFML.Graphics;
 using Pulsar.Helpers;
+using Pulsar.Services;
 
 namespace Pulsar.Graphics
 {
 	/// <summary>
 	/// Shape batcher.
 	/// </summary>
-	public class ShapeBatch : GraphicsBatch
+	public class ShapeBatch : GraphicsBatch, IShapeBatch
 	{
 		/// <summary>
 		/// The _rectangle.
@@ -18,8 +19,7 @@ namespace Pulsar.Graphics
 		/// Initializes a new instance of the <see cref="Pulsar.Graphics.ShapeBatch"/> class.
 		/// </summary>
 		/// <param name="renderTarget">Render target.</param>
-		public ShapeBatch(RenderTarget renderTarget)
-			: base(renderTarget)
+		public ShapeBatch()
 		{
 
 		}
@@ -68,18 +68,6 @@ namespace Pulsar.Graphics
 			_rectangle.Scale = s;
 
 			RenderTarget.Draw(_rectangle);
-		}
-
-		/// <summary>
-		/// Draws rectangle.
-		/// </summary>
-		/// <param name="rectangle">Rectangle.</param>
-		/// <param name="position">Position.</param>
-		/// <param name="fillColor">Fill color.</param>
-		/// <param name="borderColor">Border color.</param>
-		public void DrawRectangle(Rectangle rectangle, Vector position, Color fillColor, Color borderColor)
-		{
-			DrawRectangle (rectangle, position, fillColor, borderColor, 0, Vector.Zero, 0);
 		}
 	}
 }

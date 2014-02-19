@@ -1,13 +1,14 @@
 ﻿using System;
 using SFML.Graphics;
 using SFML.Window;
+using Pulsar.Services;
 
 namespace Pulsar.Graphics
 {
 	/// <summary>
 	/// Text batcher.
 	/// </summary>
-	public sealed class TextBatch : GraphicsBatch
+	public sealed class TextBatch : GraphicsBatch, ITextBatch
 	{
 		/// <summary>
 		/// The _text.
@@ -18,8 +19,7 @@ namespace Pulsar.Graphics
 		/// Initializes a new instance of the <see cref="Pulsar.Graphics.TextBatch"/> class.
 		/// </summary>
 		/// <param name="renderTarget">Render target.</param>
-		internal TextBatch(RenderTarget renderTarget)
-			: base(renderTarget)
+		internal TextBatch()
 		{
 
 		} 
@@ -60,18 +60,6 @@ namespace Pulsar.Graphics
 
 			_text.Style = styles;
 			RenderTarget.Draw(_text);
-		}
-
-		/// <summary>
-		/// Draws the string.
-		/// </summary>
-		/// <param name="font">Font.</param>
-		/// <param name="text">Text.</param>
-		/// <param name="position">Position.</param>
-		/// <param name="color">Color.</param>
-		public void DrawString(Font font, string text, Vector position, Color color)
-		{
-			DrawString(font, text, position, color, 0.0f, Vector.Zero, 1.0f);
 		}
 	}
 }

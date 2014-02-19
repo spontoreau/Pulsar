@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Pulsar.Services;
 
 namespace Pulsar.Content
 {
 	/// <summary>
 	/// Content manager.
 	/// </summary>
-	public sealed class ContentManager
+	public sealed class ContentManager : IContentManager
 	{
 		/// <summary>
 		/// Gets or sets the resolvers.
