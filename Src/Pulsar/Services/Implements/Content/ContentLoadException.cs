@@ -1,6 +1,6 @@
 using System;
 
-namespace Pulsar.Content
+namespace Pulsar.Services.Implements.Content
 {
 	/// <summary>
 	/// Content load exception.

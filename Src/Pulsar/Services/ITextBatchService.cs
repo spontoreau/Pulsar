@@ -6,7 +6,7 @@ namespace Pulsar.Services
 	/// <summary>
 	/// Text batcher.
 	/// </summary>
-	public interface ITextBatch : IGraphicsBatch
+	public interface ITextBatchService : IGraphicsBatchService
 	{
 		// <summary>
 		/// Draws the string.

@@ -2,12 +2,12 @@ using SFML.Graphics;
 using SFML.Window;
 using Pulsar.Services;
 
-namespace Pulsar.Graphics
+namespace Pulsar.Services.Implements.Graphics
 {
 	/// <summary>
 	/// Graphics batcher.
 	/// </summary>
-	public abstract class GraphicsBatch : IGraphicsBatch
+	public abstract class GraphicsBatchService : IGraphicsBatchService
 	{
 		/// <summary>
 		/// The _view.
@@ -48,7 +48,7 @@ namespace Pulsar.Graphics
 		/// Initializes a new instance of the <see cref="Pulsar.Graphics.GraphicsBatch"/> class.
 		/// </summary>
 		/// <param name="renderTarget">Render target.</param>
-		protected GraphicsBatch()
+		protected GraphicsBatchService()
 		{
 
 		}

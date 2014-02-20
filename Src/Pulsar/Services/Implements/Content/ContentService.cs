@@ -5,12 +5,12 @@ using System.Linq;
 using System.Reflection;
 using Pulsar.Services;
 
-namespace Pulsar.Content
+namespace Pulsar.Services.Implements.Content
 {
 	/// <summary>
 	/// Content manager.
 	/// </summary>
-	public sealed class ContentManager : IContentManager
+	public sealed class ContentService : IContentService
 	{
 		/// <summary>
 		/// Gets or sets the resolvers.
@@ -39,7 +39,7 @@ namespace Pulsar.Content
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Pulsar.Content.ContentManager"/> class.
 		/// </summary>
-		internal ContentManager()
+		internal ContentService()
 		{
 			Assets = new Dictionary<string, object>();
 			Resolvers = new Dictionary<Type, ContentResolver>();

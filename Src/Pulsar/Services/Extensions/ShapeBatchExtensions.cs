@@ -1,5 +1,5 @@
 ﻿using System;
-using Pulsar.Graphics;
+using Pulsar.Services.Implements.Graphics;
 
 namespace Pulsar.Services
 {
@@ -15,7 +15,7 @@ namespace Pulsar.Services
 		/// <param name="position">Position.</param>
 		/// <param name="fillColor">Fill color.</param>
 		/// <param name="borderColor">Border color.</param>
-		public static void DrawRectangle(this ShapeBatch batch, Rectangle rectangle, Vector position, Color fillColor, Color borderColor)
+		public static void DrawRectangle(this ShapeBatchService batch, Rectangle rectangle, Vector position, Color fillColor, Color borderColor)
 		{
 			batch.DrawRectangle (rectangle, position, fillColor, borderColor, 0, Vector.Zero, 0);
 		}

@@ -13,7 +13,7 @@ namespace Pulsar.Services
 		/// </summary>
 		/// <param name="blendMode">Blend mode.</param>
 		/// <param name="view">View.</param>
-		public static void Begin(this IGraphicsBatch batch, BlendMode blendMode, View view)
+		public static void Begin(this IGraphicsBatchService batch, BlendMode blendMode, View view)
 		{
 			batch.Begin(blendMode, view.Viewport, view.Center, view.Size, view.Rotation);
 		}
@@ -22,7 +22,7 @@ namespace Pulsar.Services
 		/// Begin batching.
 		/// </summary>
 		/// <param name="blendMode">Blend mode.</param>
-		public static void Begin(this IGraphicsBatch batch, BlendMode blendMode)
+		public static void Begin(this IGraphicsBatchService batch, BlendMode blendMode)
 		{
 			batch.Begin(blendMode, batch.RenderTarget.GetView());
 		}
@@ -30,7 +30,7 @@ namespace Pulsar.Services
 		/// <summary>
 		/// Begin batching.
 		/// </summary>
-		public static void Begin(this IGraphicsBatch batch)
+		public static void Begin(this IGraphicsBatchService batch)
 		{
 			batch.Begin(BlendMode.Alpha);
 		}

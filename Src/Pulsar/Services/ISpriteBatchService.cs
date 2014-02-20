@@ -6,7 +6,7 @@ namespace Pulsar.Services
 	/// <summary>
 	/// Sprite batcher.
 	/// </summary>
-	public interface ISpriteBatch : IGraphicsBatch
+	public interface ISpriteBatchService : IGraphicsBatchService
 	{
 		/// <summary>
 		/// Draw the specified texture.

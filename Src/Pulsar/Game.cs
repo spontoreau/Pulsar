@@ -2,8 +2,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using Pulsar.Content;
-using Pulsar.Graphics;
+using Pulsar.Services.Implements.Content;
+using Pulsar.Services.Implements.Graphics;
 
 namespace Pulsar
 {
@@ -111,10 +111,10 @@ namespace Pulsar
 		/// </summary>
 		/// <value>The content manager.</value>
 		//TODO no need to have the property here, ContentManager must have to be a service (next update to come)
-		public ContentManager Content { get; private set; }
+		public ContentService Content { get; private set; }
 
 		//TODO no need to have the property here, SpriteBatcher must have to be a service (next update to come)
-		public SpriteBatch SpriteBatcher { get; private set;}
+		public SpriteBatchService SpriteBatcher { get; private set;}
 
 		/// <summary>
 		/// Gets the components.
@@ -135,7 +135,7 @@ namespace Pulsar
 			InitWaitingComponents = new Collection<IGameComponent>();
 			UpdateableComponents = new Collection<IUpdateable>();
 			DrawableComponents = new Collection<IDrawable>();
-			Content = new ContentManager();
+			Content = new ContentService();
 
 			GameTime = new GameTime();
 		}

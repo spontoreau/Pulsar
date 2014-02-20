@@ -5,7 +5,7 @@ namespace Pulsar.Services
 	/// <summary>
 	/// Content manager.
 	/// </summary>
-	public interface IContentManager
+	public interface IContentService
 	{
 		/// <summary>
 		/// Gets or sets the root directory.

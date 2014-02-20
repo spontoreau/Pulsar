@@ -3,9 +3,9 @@
 namespace Pulsar.Services
 {
 	/// <summary>
-	/// I shape batch.
+	/// Shape batch.
 	/// </summary>
-	public interface IShapeBatch : IGraphicsBatch
+	public interface IShapeBatchService : IGraphicsBatchService
 	{
 		/// <summary>
 		/// Draws the rectangle.

@@ -4,12 +4,12 @@ using SFML.Window;
 using Pulsar.Helpers;
 using Pulsar.Services;
 
-namespace Pulsar.Graphics
+namespace Pulsar.Services.Implements.Graphics
 {
 	/// <summary>
 	/// Sprite batcher.
 	/// </summary>
-	public sealed class SpriteBatch : GraphicsBatch, ISpriteBatch
+	public sealed class SpriteBatchService : GraphicsBatchService, ISpriteBatchService
 	{
 		/// <summary>
 		/// The _sprite.
@@ -20,7 +20,7 @@ namespace Pulsar.Graphics
 		/// Initializes a new instance of the <see cref="Pulsar.Graphics.SpriteBatch"/> class.
 		/// </summary>
 		/// <param name="renderTarget">Render target.</param>
-		internal SpriteBatch()
+		internal SpriteBatchService()
 		{
 
 		}        

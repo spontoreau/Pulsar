@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace Pulsar.Content
+namespace Pulsar.Services.Implements.Content
 {
 	/// <summary>
 	/// Package item.

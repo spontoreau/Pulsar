@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace Pulsar.Content
+namespace Pulsar.Services.Implements.Content
 {
 	/// <summary>
 	/// Resolve a content type
@@ -12,7 +12,7 @@ namespace Pulsar.Content
 		/// Gets or sets the content.
 		/// </summary>
 		/// <value>The content.</value>
-		protected internal ContentManager Content { get; internal set; }
+		protected internal ContentService Content { get; internal set; }
 
 		/// <summary>
 		/// Gets the type.

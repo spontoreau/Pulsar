@@ -7,7 +7,7 @@ namespace Pulsar.Services
 	/// <summary>
 	/// Graphics batcher.
 	/// </summary>
-	public interface IGraphicsBatch
+	public interface IGraphicsBatchService
 	{
 		/// <summary>
 		/// Gets the render traget.

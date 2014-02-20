@@ -3,12 +3,12 @@ using SFML.Graphics;
 using Pulsar.Helpers;
 using Pulsar.Services;
 
-namespace Pulsar.Graphics
+namespace Pulsar.Services.Implements.Graphics
 {
 	/// <summary>
 	/// Shape batcher.
 	/// </summary>
-	public class ShapeBatch : GraphicsBatch, IShapeBatch
+	public class ShapeBatchService : GraphicsBatchService, IShapeBatchService
 	{
 		/// <summary>
 		/// The _rectangle.
@@ -19,7 +19,7 @@ namespace Pulsar.Graphics
 		/// Initializes a new instance of the <see cref="Pulsar.Graphics.ShapeBatch"/> class.
 		/// </summary>
 		/// <param name="renderTarget">Render target.</param>
-		public ShapeBatch()
+		public ShapeBatchService()
 		{
 
 		}

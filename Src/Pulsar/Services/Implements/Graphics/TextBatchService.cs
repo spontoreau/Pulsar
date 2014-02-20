@@ -3,12 +3,12 @@ using SFML.Graphics;
 using SFML.Window;
 using Pulsar.Services;
 
-namespace Pulsar.Graphics
+namespace Pulsar.Services.Implements.Graphics
 {
 	/// <summary>
 	/// Text batcher.
 	/// </summary>
-	public sealed class TextBatch : GraphicsBatch, ITextBatch
+	public sealed class TextBatchService : GraphicsBatchService, ITextBatchService
 	{
 		/// <summary>
 		/// The _text.
@@ -19,7 +19,7 @@ namespace Pulsar.Graphics
 		/// Initializes a new instance of the <see cref="Pulsar.Graphics.TextBatch"/> class.
 		/// </summary>
 		/// <param name="renderTarget">Render target.</param>
-		internal TextBatch()
+		internal TextBatchService()
 		{
 
 		} 

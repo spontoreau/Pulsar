@@ -1,9 +1,8 @@
 using System;
 using System.IO;
 using SFML.Audio;
-using Pulsar.Content;
 
-namespace Pulsar.Content.Resolvers
+namespace Pulsar.Services.Implements.Content.Resolvers
 {
 	/// <summary>
 	/// Sound resolver.

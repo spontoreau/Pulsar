@@ -1,6 +1,6 @@
 using System;
 
-namespace Pulsar.Content.Resolvers
+namespace Pulsar.Services.Implements.Content.Resolvers
 {
 	/// <summary>
 	/// Package resolver.

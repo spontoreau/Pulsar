@@ -1,7 +1,6 @@
 ﻿using System;
 using Pulsar;
 using SFML.Graphics;
-using Pulsar.Graphics;
 
 namespace PulsarContent
 {
