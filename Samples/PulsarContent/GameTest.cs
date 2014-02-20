@@ -4,7 +4,7 @@ using SFML.Graphics;
 
 namespace PulsarContent
 {
-	public class GameTest : Game
+	/*public class GameTest : Game
 	{
 		private Texture Texture;
 
@@ -31,6 +31,6 @@ namespace PulsarContent
 			base.Draw (gameTime);
 		}
 
-	}
+	}*/
 }
 

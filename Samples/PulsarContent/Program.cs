@@ -6,8 +6,8 @@ namespace PulsarContent
 	{
 		public static void Main (string[] args)
 		{
-			var game = new GameTest();
-			game.Run();
+			//var game = new GameTest();
+			//game.Run();
 		}
 	}
 }

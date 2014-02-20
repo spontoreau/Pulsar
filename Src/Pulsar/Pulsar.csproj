@@ -37,15 +37,8 @@
     <Compile Include="Vector.cs" />
     <Compile Include="Rectangle.cs" />
     <Compile Include="GameTime.cs" />
-    <Compile Include="IGameComponent.cs" />
-    <Compile Include="IUpdateable.cs" />
-    <Compile Include="GameComponentCollectionEventArgs.cs" />
-    <Compile Include="GameComponentCollection.cs" />
-    <Compile Include="GameComponent.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Color.cs" />
-    <Compile Include="IDrawable.cs" />
-    <Compile Include="DrawableGameComponent.cs" />
     <Compile Include="Helpers\RandomHelper.cs" />
     <Compile Include="Helpers\MathHelper.cs" />
     <Compile Include="Helpers\SerializerHelper.cs" />
@@ -75,6 +68,8 @@
     <Compile Include="Services\Implements\Content\ContentService.cs" />
     <Compile Include="Services\Implements\WindowService.cs" />
     <Compile Include="Services\Extensions\WindowServiceExtensions.cs" />
+    <Compile Include="IGameModule.cs" />
+    <Compile Include="IDrawableGameModule.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

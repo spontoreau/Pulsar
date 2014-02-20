@@ -1,4 +1,6 @@
-using System;
+//TODO rewrite with DI
+
+/*using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -229,7 +231,7 @@ namespace Pulsar
 		/// <param name="gameTime">Game time.</param>
 		protected virtual void Draw(GameTime gameTime)
 		{
-			/*if (WindowContext.IsCreated) 
+			if (WindowContext.IsCreated) 
 			{
 				WindowContext.Window.Clear ();
 				
@@ -239,7 +241,7 @@ namespace Pulsar
 				}
 
 				WindowContext.Window.Display ();
-			}*/
+			}
 		}
 
 		/// <summary>
@@ -420,3 +422,4 @@ namespace Pulsar
 	}
 }
 
+*/
