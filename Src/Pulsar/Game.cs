@@ -74,11 +74,11 @@ namespace Pulsar
 			}
 			set
 			{
-			    if (!WindowContext.IsCreated) return;
+				//if (!WindowContext.IsCreated) return;
 
 			    _isFixedTimeStep = value;
-			    WindowContext.Window.SetVerticalSyncEnabled(false);
-			    WindowContext.Window.SetFramerateLimit((value) ? 120U : 0U);//uint force to multiple by 2 to obtain refresh at 60fps
+				//WindowContext.Window.SetVerticalSyncEnabled(false);
+				//WindowContext.Window.SetFramerateLimit((value) ? 120U : 0U);//uint force to multiple by 2 to obtain refresh at 60fps
 			}
 		}
 
@@ -99,10 +99,10 @@ namespace Pulsar
 			}
 			set
 			{
-			    if (!WindowContext.IsCreated) return;
+				//if (!WindowContext.IsCreated) return;
 
 			    _isMouseVisible = value;
-			    WindowContext.Window.SetMouseCursorVisible(value);
+				//WindowContext.Window.SetMouseCursorVisible(value);
 			}
 		}
 
@@ -149,13 +149,13 @@ namespace Pulsar
 				throw new InvalidOperationException("Game is running");
 
 		    IsExiting = false;
-			WindowContext.Created += RenderWindowCreated;
-			WindowContext.Creating += RenderWindowCreating;
+			//WindowContext.Created += RenderWindowCreated;
+			//WindowContext.Creating += RenderWindowCreating;
 
 		    Initialize();
 
-			if (!WindowContext.IsCreated)
-				WindowContext.Create();
+			//if (!WindowContext.IsCreated)
+			//WindowContext.Create();
 
 		    LoadContent();
 		    IsRunning = true; 
@@ -187,8 +187,8 @@ namespace Pulsar
 
 			Watch.Restart();
 
-			if (WindowContext.IsCreated)
-				WindowContext.Window.DispatchEvents();
+			//if (WindowContext.IsCreated)
+			//	WindowContext.Window.DispatchEvents();
 
 			Update(GameTime);
 			Draw(GameTime);
@@ -229,7 +229,7 @@ namespace Pulsar
 		/// <param name="gameTime">Game time.</param>
 		protected virtual void Draw(GameTime gameTime)
 		{
-			if (WindowContext.IsCreated) 
+			/*if (WindowContext.IsCreated) 
 			{
 				WindowContext.Window.Clear ();
 				
@@ -239,8 +239,7 @@ namespace Pulsar
 				}
 
 				WindowContext.Window.Display ();
-			}
-
+			}*/
 		}
 
 		/// <summary>
@@ -413,9 +412,9 @@ namespace Pulsar
 		/// <param name="eventArgs">Event arguments.</param>
 		protected virtual void RenderWindowCreated(object sender, EventArgs eventArgs)
 		{
-			WindowContext.Window.GainedFocus += GainedFocus;
-			WindowContext.Window.LostFocus += LostFocus;
-			WindowContext.Window.Closed += Closed;
+			//WindowContext.Window.GainedFocus += GainedFocus;
+			//WindowContext.Window.LostFocus += LostFocus;
+			//WindowContext.Window.Closed += Closed;
 			IsActive = true;
 		}
 	}

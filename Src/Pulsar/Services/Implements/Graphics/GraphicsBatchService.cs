@@ -29,7 +29,7 @@ namespace Pulsar.Services.Implements.Graphics
 			{
 				_renderTarget = value;
 				_view = _renderTarget.GetView();
-				WindowContext.Created += WindowContext_Created;
+				//WindowContext.Created += WindowContext_Created;
 			}
 		}
 
@@ -87,7 +87,7 @@ namespace Pulsar.Services.Implements.Graphics
 		/// <param name="e">E.</param>
 		private void WindowContext_Created(object sender, System.EventArgs e)
 		{
-			RenderTarget = WindowContext.Window;
+			//RenderTarget = WindowContext.Window;
 		}
 	}
 }

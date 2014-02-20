@@ -46,7 +46,6 @@
     <Compile Include="Color.cs" />
     <Compile Include="IDrawable.cs" />
     <Compile Include="DrawableGameComponent.cs" />
-    <Compile Include="WindowContext.cs" />
     <Compile Include="Helpers\RandomHelper.cs" />
     <Compile Include="Helpers\MathHelper.cs" />
     <Compile Include="Helpers\SerializerHelper.cs" />
@@ -74,6 +73,8 @@
     <Compile Include="Services\Implements\Graphics\SpriteBatchService.cs" />
     <Compile Include="Services\Implements\Graphics\TextBatchService.cs" />
     <Compile Include="Services\Implements\Content\ContentService.cs" />
+    <Compile Include="Services\Implements\WindowService.cs" />
+    <Compile Include="Services\Extensions\WindowServiceExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
