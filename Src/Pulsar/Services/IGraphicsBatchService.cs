@@ -10,10 +10,10 @@ namespace Pulsar.Services
 	public interface IGraphicsBatchService
 	{
 		/// <summary>
-		/// Gets the render traget.
+		/// Gets or sets the render target.
 		/// </summary>
-		/// <value>The render traget.</value>
-		RenderTarget RenderTarget { get; }
+		/// <value>The render target.</value>
+		RenderTarget RenderTarget { get; set; }
 
 		/// <summary>
 		/// Gets a value indicating whether this instance has begin.

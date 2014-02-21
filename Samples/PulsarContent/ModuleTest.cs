@@ -19,10 +19,16 @@ namespace PulsarContent
 		public IContentService ContentService { get; set;}
 
 		/// <summary>
-		/// Gets or sets the I sprite batch service.
+		/// Gets or sets the sprite batch service.
 		/// </summary>
 		/// <value>The I sprite batch service.</value>
 		public ISpriteBatchService SpriteBatchService { get; set;}
+
+		/// <summary>
+		/// Gets or sets the window service.
+		/// </summary>
+		/// <value>The window service.</value>
+		public IWindowService WindowService { get; set; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PulsarContent.ModuleTest"/> class.
@@ -37,7 +43,13 @@ namespace PulsarContent
 		public void Initialize ()
 		{
 			ContentService.RootDirectory = "Content";
+			ContentService.LazyLoading = true;
 			texture = ContentService.Load<Texture> ("Test/vtek");
+
+			if (!WindowService.IsCreated)
+				throw new Exception ("Window must be created");
+
+			SpriteBatchService.RenderTarget = WindowService.Window;
 		}
 
 		/// <summary>

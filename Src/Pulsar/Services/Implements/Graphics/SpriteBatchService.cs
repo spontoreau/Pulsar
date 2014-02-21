@@ -20,7 +20,7 @@ namespace Pulsar.Services.Implements.Graphics
 		/// Initializes a new instance of the <see cref="Pulsar.Graphics.SpriteBatch"/> class.
 		/// </summary>
 		/// <param name="renderTarget">Render target.</param>
-		internal SpriteBatchService()
+		public SpriteBatchService()
 		{
 
 		}        
@@ -99,6 +99,7 @@ namespace Pulsar.Services.Implements.Graphics
 			if (!HasBegin)
 				throw new Exception ("SpriteBatch not start");
 
+			//TODO TextureRect seems not work with Mono on OSX, sound boring...
 			var tr = _sprite.TextureRect;
 			if (source != null) {
 				tr.Left = (int)source.X;

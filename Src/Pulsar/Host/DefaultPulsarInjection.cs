@@ -12,6 +12,7 @@ namespace Pulsar.Host
 		/// Initializes a new instance of the <see cref="Pulsar.Host.DefaultPulsarInjection"/> class.
 		/// </summary>
 		public DefaultPulsarInjection ()
+			:base()
 		{
 
 		}

@@ -148,6 +148,8 @@ namespace Pulsar
 		/// </summary>
 		public Game AddModule<T>() where T : IModule
 		{
+			PulsarHost.Instance.Kernel.Bind<IModule> ().To<T> ().InSingletonScope();
+
 			var module = PulsarHost.Instance.Kernel.GetService(typeof(T));
 
 			var wasAdded = Modules.Any (x => x.GetType ().IsInstanceOfType (module));
@@ -183,21 +185,20 @@ namespace Pulsar
 			if (IsRunning)
 				throw new InvalidOperationException("Game is running");
 
+			WindowService = (IWindowService)PulsarHost.Instance.Kernel.GetService(typeof(IWindowService));
+
 			if (WindowService == null)
 				throw new InvalidOperationException ("Window service unavaible");
 				
-			WindowService = (IWindowService)PulsarHost.Instance.Kernel.GetService(typeof(IWindowService));
-
 		    IsExiting = false;
 			WindowService.Created += RenderWindowCreated;
 			WindowService.Creating += RenderWindowCreating;
 
-			Initialize();
-
 			if (!WindowService.IsCreated)
 				WindowService.Create();
 
-		    LoadContent();
+			Initialize();
+
 		    IsRunning = true; 
 				               
 		    while (IsRunning && !IsExiting)
@@ -205,7 +206,6 @@ namespace Pulsar
 		        Tick();
 		    }
 
-		    UnloadContent();
 			Environment.Exit(1);//Allways exit the application
 		}
 
@@ -243,7 +243,8 @@ namespace Pulsar
 		/// <param name="gameTime">Game time.</param>
 		private void Update(GameTime gameTime)
 		{
-
+			foreach (var m in Modules)
+				m.Update (gameTime);
 		}
 
 		/// <summary>
@@ -252,6 +253,9 @@ namespace Pulsar
 		private void Initialize()
 		{
 			Watch = new Stopwatch();
+
+			foreach (var m in Modules)
+				m.Initialize();
 		}
 
 		/// <summary>
@@ -262,26 +266,13 @@ namespace Pulsar
 		{
 			if (WindowService.IsCreated) 
 			{
-				WindowService.Window.Clear ();
+				WindowService.Window.Clear();
 
-				WindowService.Window.Display ();
+				foreach (var d in Drawables)
+					d.Draw(gameTime);
+
+				WindowService.Window.Display();
 			}
-		}
-
-		/// <summary>
-		/// Loads content.
-		/// </summary>
-		private void LoadContent()
-		{
-
-		}
-
-		/// <summary>
-		/// Unloads content.
-		/// </summary>
-		private void UnloadContent()
-		{
-
 		}
 
 		/// <summary>

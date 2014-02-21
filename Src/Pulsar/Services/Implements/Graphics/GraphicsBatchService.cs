@@ -9,12 +9,12 @@ namespace Pulsar.Services.Implements.Graphics
 	/// </summary>
 	public abstract class GraphicsBatchService : IGraphicsBatchService
 	{
-		private IWindowService WindowService { get; set;}
-
 		/// <summary>
 		/// The _view.
 		/// </summary>
 		private View _view = new View();
+
+		private RenderTarget _renderTarget;
 
 		/// <summary>
 		/// The render target.
@@ -23,7 +23,12 @@ namespace Pulsar.Services.Implements.Graphics
 		{
 			get
 			{
-				return WindowService.Window;
+				return _renderTarget;
+			}
+			set
+			{
+				_renderTarget = value;
+				_view = _renderTarget.GetView();
 			}
 		}
 
@@ -42,7 +47,7 @@ namespace Pulsar.Services.Implements.Graphics
 		/// Initializes a new instance of the <see cref="Pulsar.Graphics.GraphicsBatch"/> class.
 		/// </summary>
 		/// <param name="renderTarget">Render target.</param>
-		protected GraphicsBatchService()
+		public GraphicsBatchService()
 		{
 
 		}

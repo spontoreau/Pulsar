@@ -39,7 +39,7 @@ namespace Pulsar.Services.Implements.Content
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Pulsar.Content.ContentManager"/> class.
 		/// </summary>
-		internal ContentService()
+		public ContentService()
 		{
 			Assets = new Dictionary<string, object>();
 			Resolvers = new Dictionary<Type, ContentResolver>();

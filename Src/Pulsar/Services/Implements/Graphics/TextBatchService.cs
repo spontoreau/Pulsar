@@ -19,7 +19,7 @@ namespace Pulsar.Services.Implements.Graphics
 		/// Initializes a new instance of the <see cref="Pulsar.Graphics.TextBatch"/> class.
 		/// </summary>
 		/// <param name="renderTarget">Render target.</param>
-		internal TextBatchService()
+		public TextBatchService()
 		{
 
 		} 
