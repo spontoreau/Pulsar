@@ -1,19 +1,26 @@
-//TODO rewrite with DI
-
-/*using System;
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using Pulsar.Services.Implements.Content;
 using Pulsar.Services.Implements.Graphics;
+using Pulsar.Services;
+using Pulsar.Host;
+using System.Collections.Generic;
 
 namespace Pulsar
 {
 	/// <summary>
 	/// Game.
 	/// </summary>
-	public class Game
+	public sealed class Game
 	{
+		/// <summary>
+		/// Gets or sets the window service.
+		/// </summary>
+		/// <value>The window service.</value>
+		public IWindowService WindowService { get; set; }
+
 		/// <summary>
 		/// Gets or sets the watch.
 		/// </summary>
@@ -25,21 +32,6 @@ namespace Pulsar
 		/// </summary>
 		/// <value>The game time.</value>
 		private GameTime GameTime { get; set; }
-
-		/// <summary>
-		/// Get or define the collection of IGameComponent which need to be initialize.
-		/// </summary>
-		protected Collection<IGameComponent> InitWaitingComponents { get; set; }
-
-		/// <summary>
-		/// Get or define the collection of IUpdateable which need to be update.
-		/// </summary>
-		protected Collection<IUpdateable> UpdateableComponents { get; set; }
-
-		/// <summary>
-		/// Get or define the collection of IDrawable which need to be draw.
-		/// </summary>
-		protected Collection<IDrawable> DrawableComponents { get; set; }
 
 		/// <summary>
 		/// Gets or sets a value indicating whether this instance is running.
@@ -76,11 +68,13 @@ namespace Pulsar
 			}
 			set
 			{
+				if (!WindowService.IsCreated)
+					return;
 				//if (!WindowContext.IsCreated) return;
 
 			    _isFixedTimeStep = value;
-				//WindowContext.Window.SetVerticalSyncEnabled(false);
-				//WindowContext.Window.SetFramerateLimit((value) ? 120U : 0U);//uint force to multiple by 2 to obtain refresh at 60fps
+				WindowService.Window.SetVerticalSyncEnabled(false);
+				WindowService.Window.SetFramerateLimit((value) ? 120U : 0U);//uint force to multiple by 2 to obtain refresh at 60fps
 			}
 		}
 
@@ -101,46 +95,85 @@ namespace Pulsar
 			}
 			set
 			{
-				//if (!WindowContext.IsCreated) return;
+				if (!WindowService.IsCreated) return;
 
 			    _isMouseVisible = value;
-				//WindowContext.Window.SetMouseCursorVisible(value);
+				WindowService.Window.SetMouseCursorVisible(value);
 			}
 		}
-
-		/// <summary>
-		/// Gets the content manager.
-		/// </summary>
-		/// <value>The content manager.</value>
-		//TODO no need to have the property here, ContentManager must have to be a service (next update to come)
-		public ContentService Content { get; private set; }
-
-		//TODO no need to have the property here, SpriteBatcher must have to be a service (next update to come)
-		public SpriteBatchService SpriteBatcher { get; private set;}
-
-		/// <summary>
-		/// Gets the components.
-		/// </summary>
-		/// <value>The components.</value>
-		//TODO, change components to module and limit the use of heavy game component (next update to come)
-		public GameComponentCollection Components { get; private set; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Pulsar.Game"/> class.
 		/// </summary>
 		public Game()
 		{
-			Components = new GameComponentCollection();
-			Components.ComponentAdded += GameComponentAdded;
-			Components.ComponentRemoved += GameComponentRemoved;
-
-			InitWaitingComponents = new Collection<IGameComponent>();
-			UpdateableComponents = new Collection<IUpdateable>();
-			DrawableComponents = new Collection<IDrawable>();
-			Content = new ContentService();
-
 			GameTime = new GameTime();
+			Modules = new List<IModule>();
+			Drawables = new List<IDrawable>();
 		}
+
+		/// <summary>
+		/// Adds the service.
+		/// </summary>
+		/// <typeparam name="TInterface">The 1st type parameter.</typeparam>
+		/// <typeparam name="TImplements">The 2nd type parameter.</typeparam>
+		public Game AddService<TInterface, TImplements>()
+			where TImplements : TInterface
+		{
+			if(IsRunning)
+				throw new InvalidOperationException("Game is running");
+
+			PulsarHost.Instance.Kernel.Bind<TInterface> ().To<TImplements>().InSingletonScope();
+
+			return this;
+		}
+
+		/// <summary>
+		/// Add custom heuristic if needed (must be use if need custom service injection)
+		/// </summary>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		public Game AddHeuristic<T>() where T : PulsarInjection
+		{
+			if(IsRunning)
+				throw new InvalidOperationException("Game is running");
+
+			PulsarHost.Instance.Initialize();
+			PulsarHost.Instance.AddHeuristic<T>();
+
+			return this;
+		}
+
+		/// <summary>
+		/// Add game module
+		/// </summary>
+		public Game AddModule<T>() where T : IModule
+		{
+			var module = PulsarHost.Instance.Kernel.GetService(typeof(T));
+
+			var wasAdded = Modules.Any (x => x.GetType ().IsInstanceOfType (module));
+
+			if(wasAdded)
+				throw new InvalidOperationException(string.Format("Module {0} already added", module.GetType()));
+
+			Modules.Add ((IModule)module);
+
+			if (module is IDrawable)
+				Drawables.Add ((IDrawable)module);
+
+			return this;
+		}
+
+		/// <summary>
+		/// Gets or sets the modules.
+		/// </summary>
+		/// <value>The modules.</value>
+		private List<IModule> Modules { get; set; }
+
+		/// <summary>
+		/// Gets or sets the drawables.
+		/// </summary>
+		/// <value>The drawables.</value>
+		private List<IDrawable> Drawables { get; set; }
 
 		/// <summary>
 		/// Run this instance.
@@ -150,14 +183,19 @@ namespace Pulsar
 			if (IsRunning)
 				throw new InvalidOperationException("Game is running");
 
+			if (WindowService == null)
+				throw new InvalidOperationException ("Window service unavaible");
+				
+			WindowService = (IWindowService)PulsarHost.Instance.Kernel.GetService(typeof(IWindowService));
+
 		    IsExiting = false;
-			//WindowContext.Created += RenderWindowCreated;
-			//WindowContext.Creating += RenderWindowCreating;
+			WindowService.Created += RenderWindowCreated;
+			WindowService.Creating += RenderWindowCreating;
 
-		    Initialize();
+			Initialize();
 
-			//if (!WindowContext.IsCreated)
-			//WindowContext.Create();
+			if (!WindowService.IsCreated)
+				WindowService.Create();
 
 		    LoadContent();
 		    IsRunning = true; 
@@ -182,15 +220,15 @@ namespace Pulsar
 		/// <summary>
 		/// Tick.
 		/// </summary>
-		protected virtual void Tick()
+		private void Tick()
 		{
 			if (IsExiting)
 				return;
 
 			Watch.Restart();
 
-			//if (WindowContext.IsCreated)
-			//	WindowContext.Window.DispatchEvents();
+			if (WindowService.IsCreated)
+				WindowService.Window.DispatchEvents();
 
 			Update(GameTime);
 			Draw(GameTime);
@@ -203,51 +241,37 @@ namespace Pulsar
 		/// Update the game.
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		protected virtual void Update(GameTime gameTime)
+		private void Update(GameTime gameTime)
 		{
-			foreach (var updateable in UpdateableComponents)
-			{
-				if (updateable.Enabled)
-					updateable.Update(gameTime);
-			}
+
 		}
 
 		/// <summary>
 		/// Initialize the game.
 		/// </summary>
-		protected virtual void Initialize()
+		private void Initialize()
 		{
 			Watch = new Stopwatch();
-
-			foreach (var component in InitWaitingComponents)
-				component.Initialize();
-
-			InitWaitingComponents.Clear();
 		}
 
 		/// <summary>
 		/// Draw the game.
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		protected virtual void Draw(GameTime gameTime)
+		private void Draw(GameTime gameTime)
 		{
-			if (WindowContext.IsCreated) 
+			if (WindowService.IsCreated) 
 			{
-				WindowContext.Window.Clear ();
-				
-				foreach (IDrawable drawable in DrawableComponents) {
-					if (drawable.Visible)
-						drawable.Draw (gameTime);
-				}
+				WindowService.Window.Clear ();
 
-				WindowContext.Window.Display ();
+				WindowService.Window.Display ();
 			}
 		}
 
 		/// <summary>
 		/// Loads content.
 		/// </summary>
-		protected virtual void LoadContent()
+		private void LoadContent()
 		{
 
 		}
@@ -255,116 +279,9 @@ namespace Pulsar
 		/// <summary>
 		/// Unloads content.
 		/// </summary>
-		protected virtual void UnloadContent()
+		private void UnloadContent()
 		{
 
-		}
-
-		/// <summary>
-		/// Game component added.
-		/// </summary>
-		/// <param name="sender">Sender.</param>
-		/// <param name="eventArgs">Event arguments.</param>
-		[Obsolete]
-		protected virtual void GameComponentAdded(object sender, GameComponentCollectionEventArgs eventArgs)
-		{
-			if (IsRunning)
-				eventArgs.Component.Initialize();
-			else //if the game is not running stack in the initialize waiting list
-				InitWaitingComponents.Add(eventArgs.Component);
-
-		    var updateable = eventArgs.Component as IUpdateable;
-            if (updateable != null)
-			{
-                InsertUpdateable(updateable);
-                updateable.UpdateOrderChanged += UpdateOrderChanged;
-			}
-
-		    var drawable = eventArgs.Component as IDrawable;
-		    if (drawable == null) return;
-
-		    InsertDrawable(drawable);
-		    drawable.DrawOrderChanged += DrawOrderChanged;
-		}
-
-		/// <summary>
-		/// Games component removed.
-		/// </summary>
-		/// <param name="sender">Sender.</param>
-		/// <param name="eventArgs">Event arguments.</param>
-		[Obsolete]
-		protected virtual void GameComponentRemoved(object sender, GameComponentCollectionEventArgs eventArgs)
-		{
-			var component = eventArgs.Component;
-			if (!IsRunning) //if the game is not running, initialize and loadcontent is'nt make, so remove the component from the InitWaitingGameComponent collection
-				InitWaitingComponents.Remove(component);
-
-            var updateable = component as IUpdateable;
-            if (updateable != null)
-			{
-				UpdateableComponents.Remove(updateable);
-				updateable.UpdateOrderChanged -= UpdateOrderChanged;                
-			}
-
-            var drawable = eventArgs.Component as IDrawable;
-		    if (drawable == null) return;
-
-		    DrawableComponents.Remove(drawable);
-		    drawable.DrawOrderChanged -= DrawOrderChanged;
-		}
-
-		/// <summary>
-		/// Updates order changed.
-		/// </summary>
-		/// <param name="sender">Sender.</param>
-		/// <param name="eventArgs">Event arguments.</param>
-		[Obsolete]
-		protected void UpdateOrderChanged(object sender, EventArgs eventArgs)
-		{
-			var updateable = (IUpdateable)sender;
-			UpdateableComponents.Remove(updateable);
-			InsertUpdateable(updateable);            
-		}
-
-		/// <summary>
-		/// Inserts the updateable.
-		/// </summary>
-		/// <param name="updateable">Updateable.</param>
-		[Obsolete]
-		protected void InsertUpdateable(IUpdateable updateable)
-		{
-			//find the follower and insert the updateable at the index of the follower
-			var follower = (from u in UpdateableComponents where u.UpdateOrder >= updateable.UpdateOrder select u).FirstOrDefault();
-			//if follower is null, updateable is the last in the collection, otherwise take the index of the follower
-			var index = (follower == null) ? UpdateableComponents.Count : UpdateableComponents.IndexOf(follower); 
-			UpdateableComponents.Insert(index, updateable);
-		}
-
-		/// <summary>
-		/// Draws order changed.
-		/// </summary>
-		/// <param name="sender">Sender.</param>
-		/// <param name="eventArgs">Event arguments.</param>
-		[Obsolete]
-		private void DrawOrderChanged(object sender, EventArgs eventArgs)
-		{
-			var drawable = (IDrawable)sender;
-			DrawableComponents.Remove(drawable);
-			InsertDrawable(drawable);
-		}
-
-		/// <summary>
-		/// Inserts the drawable.
-		/// </summary>
-		/// <param name="drawable">Drawable.</param>
-		[Obsolete]
-		private void InsertDrawable(IDrawable drawable)
-		{
-			//find the follower and insert the drawable at the index of the follower
-			var follower = (from u in DrawableComponents where u.DrawOrder >= drawable.DrawOrder select u).FirstOrDefault();
-			//if follower is null, drawable is the last in the collection, otherwise take the index of the follower
-			var index = (follower == null) ? DrawableComponents.Count : DrawableComponents.IndexOf(follower);
-			DrawableComponents.Insert(index, drawable);
 		}
 
 		/// <summary>
@@ -372,7 +289,7 @@ namespace Pulsar
 		/// </summary>
 		/// <param name="sender">Sender.</param>
 		/// <param name="eventArgs">Event arguments.</param>
-		protected virtual void GainedFocus(object sender, EventArgs eventArgs)
+		private void GainedFocus(object sender, EventArgs eventArgs)
 		{
 			IsActive = true;
 		}
@@ -382,7 +299,7 @@ namespace Pulsar
 		/// </summary>
 		/// <param name="sender">Sender.</param>
 		/// <param name="eventArgs">Event arguments.</param>
-		protected virtual void LostFocus(object sender, EventArgs eventArgs)
+		private void LostFocus(object sender, EventArgs eventArgs)
 		{
 			IsActive = false;
 		}
@@ -392,7 +309,7 @@ namespace Pulsar
 		/// </summary>
 		/// <param name="sender">Sender.</param>
 		/// <param name="eventArgs">Event arguments.</param>
-		protected virtual void Closed(object sender, EventArgs eventArgs)
+		private void Closed(object sender, EventArgs eventArgs)
 		{
 			Exit();
 		}
@@ -402,7 +319,7 @@ namespace Pulsar
 		/// </summary>
 		/// <param name="sender">Sender.</param>
 		/// <param name="eventArgs">Event arguments.</param>
-		protected virtual void RenderWindowCreating(object sender, EventArgs eventArgs)
+		private void RenderWindowCreating(object sender, EventArgs eventArgs)
 		{
 			IsActive = false;
 		}
@@ -412,14 +329,12 @@ namespace Pulsar
 		/// </summary>
 		/// <param name="sender">Sender.</param>
 		/// <param name="eventArgs">Event arguments.</param>
-		protected virtual void RenderWindowCreated(object sender, EventArgs eventArgs)
+		private void RenderWindowCreated(object sender, EventArgs eventArgs)
 		{
-			//WindowContext.Window.GainedFocus += GainedFocus;
-			//WindowContext.Window.LostFocus += LostFocus;
-			//WindowContext.Window.Closed += Closed;
+			WindowService.Window.GainedFocus += GainedFocus;
+			WindowService.Window.LostFocus += LostFocus;
+			WindowService.Window.Closed += Closed;
 			IsActive = true;
 		}
 	}
 }
-
-*/

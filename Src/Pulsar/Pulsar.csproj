@@ -31,6 +31,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
+    <Reference Include="Ninject">
+      <HintPath>..\..\packages\Ninject.3.0.1.10\lib\net40\Ninject.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -55,8 +58,6 @@
     <Compile Include="Services\ITextBatchService.cs" />
     <Compile Include="Services\Implements\Content\ContentLoadException.cs" />
     <Compile Include="Services\Implements\Content\ContentResolver.cs" />
-    <Compile Include="Services\Implements\Content\Package.cs" />
-    <Compile Include="Services\Implements\Content\PackageItem.cs" />
     <Compile Include="Services\Implements\Content\Resolvers\FontResolver.cs" />
     <Compile Include="Services\Implements\Content\Resolvers\PackageResolver.cs" />
     <Compile Include="Services\Implements\Content\Resolvers\SoundResolver.cs" />
@@ -68,14 +69,22 @@
     <Compile Include="Services\Implements\Content\ContentService.cs" />
     <Compile Include="Services\Implements\WindowService.cs" />
     <Compile Include="Services\Extensions\WindowServiceExtensions.cs" />
-    <Compile Include="IGameModule.cs" />
-    <Compile Include="IDrawableGameModule.cs" />
+    <Compile Include="Host\PulsarHost.cs" />
+    <Compile Include="Host\PulsarInjection.cs" />
+    <Compile Include="Host\DefaultPulsarInjection.cs" />
+    <Compile Include="Module\IModule.cs" />
+    <Compile Include="Module\IDrawable.cs" />
+    <Compile Include="Module\ModuleFactory.cs" />
+    <Compile Include="Package.cs" />
+    <Compile Include="PackageItem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Helpers\" />
     <Folder Include="Services\" />
     <Folder Include="Services\Implements\" />
+    <Folder Include="Host\" />
+    <Folder Include="Module\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Sfml\Audio\sfml-audio.csproj">
@@ -90,5 +99,8 @@
       <Project>{D17DE83D-A592-461F-8AF2-53F9E22E1D0F}</Project>
       <Name>sfml-window</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

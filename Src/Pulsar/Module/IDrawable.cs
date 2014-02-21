@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 
 namespace Pulsar
 {
 	/// <summary>
-	/// Define a drawable game moduledrawable.
+	/// drawable module.
 	/// </summary>
-	public interface IDrawableGameModule : IGameModule
+	public interface IDrawable : IModule
 	{
 		/// <summary>
 		/// Draw this instance.

@@ -5,7 +5,7 @@ namespace Pulsar
 	/// <summary>
 	/// Game module.
 	/// </summary>
-	public interface IGameModule
+	public interface IModule
 	{
 		/// <summary>
 		/// Initialize this instance.

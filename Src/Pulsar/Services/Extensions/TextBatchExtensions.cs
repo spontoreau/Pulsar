@@ -16,7 +16,7 @@ namespace Pulsar.Services
 		/// <param name="text">Text.</param>
 		/// <param name="position">Position.</param>
 		/// <param name="color">Color.</param>
-		public static void DrawString(this TextBatchService batch, Font font, string text, Vector position, Color color)
+		public static void DrawString(this ITextBatchService batch, Font font, string text, Vector position, Color color)
 		{
 			batch.DrawString(font, text, position, color, 0.0f, Vector.Zero, 1.0f);
 		}

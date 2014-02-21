@@ -5,7 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text.RegularExpressions;
 using Pulsar.Helpers;
 
-namespace Pulsar.Services.Implements.Content
+namespace Pulsar
 {
 	/// <summary>
 	/// Package.
