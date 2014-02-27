@@ -2,6 +2,7 @@
 using Pulsar;
 using Pulsar.Services;
 using SFML.Graphics;
+using Pulsar.Module;
 
 namespace PulsarContent
 {

@@ -7,6 +7,7 @@ using Pulsar.Services.Implements.Graphics;
 using Pulsar.Services;
 using Pulsar.Host;
 using System.Collections.Generic;
+using Pulsar.Module;
 
 namespace Pulsar
 {
