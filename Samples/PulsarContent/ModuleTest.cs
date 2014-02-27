@@ -59,7 +59,8 @@ namespace PulsarContent
 		/// <param name="gameTime">Game time.</param>
 		public void Update (GameTime gameTime)
 		{
-
+			var tmp = this.TempData();
+			var glb = this.GlobalData();
 		}
 
 		/// <summary>

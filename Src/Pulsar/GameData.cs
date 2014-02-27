@@ -14,7 +14,7 @@ namespace Pulsar
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Pulsar.GameData"/> class.
 		/// </summary>
-		public GameData ()
+		internal GameData ()
 		{
 		}
 

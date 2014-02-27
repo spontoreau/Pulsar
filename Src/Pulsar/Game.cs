@@ -1,13 +1,13 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using Pulsar.Host;
+using Pulsar.Module;
+using Pulsar.Services;
 using Pulsar.Services.Implements.Content;
 using Pulsar.Services.Implements.Graphics;
-using Pulsar.Services;
-using Pulsar.Host;
-using System.Collections.Generic;
-using Pulsar.Module;
 
 namespace Pulsar
 {
@@ -231,6 +231,7 @@ namespace Pulsar
 			if (WindowService.IsCreated)
 				WindowService.Window.DispatchEvents();
 
+
 			Update(GameTime);
 			Draw(GameTime);
 
@@ -244,6 +245,8 @@ namespace Pulsar
 		/// <param name="gameTime">Game time.</param>
 		private void Update(GameTime gameTime)
 		{
+			this.TempData().Clear();
+
 			foreach (var m in Modules)
 				m.Update (gameTime);
 		}
@@ -253,6 +256,9 @@ namespace Pulsar
 		/// </summary>
 		private void Initialize()
 		{
+			this.InitGlobalData();
+			this.InitTempData();
+
 			Watch = new Stopwatch();
 
 			foreach (var m in Modules)
