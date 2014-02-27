@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Pulsar
+namespace Pulsar.Module
 {
 	/// <summary>
 	/// Game module.

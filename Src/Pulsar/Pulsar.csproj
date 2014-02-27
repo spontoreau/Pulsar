@@ -76,7 +76,6 @@
     <Compile Include="Host\DefaultPulsarInjection.cs" />
     <Compile Include="Module\IModule.cs" />
     <Compile Include="Module\IDrawable.cs" />
-    <Compile Include="Module\ModuleFactory.cs" />
     <Compile Include="Package.cs" />
     <Compile Include="PackageItem.cs" />
     <Compile Include="GameData.cs" />
