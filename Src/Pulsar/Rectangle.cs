@@ -220,7 +220,7 @@ namespace Pulsar
 		public override bool Equals(object obj)
 		{
 		    var r = obj as Rectangle;
-		    return r != null && Equals(r);
+		    return Equals(r);
 		}
 
 		/// <summary>
@@ -231,25 +231,14 @@ namespace Pulsar
 		/// <see cref="Pulsar.Rectangle"/>; otherwise, <c>false</c>.</returns>
 		public bool Equals(Rectangle other)
 	    {
+			if (other == null)
+				return false;
+
 	        if (this == other)
 				return true;
 
 	        return X == other.X && Y == other.Y && Width == other.Width && Height == other.Height;
 	    }
-
-		/// <param name="r1">R1.</param>
-		/// <param name="r2">R2.</param>
-		public static bool operator ==(Rectangle r1, Rectangle r2)
-		{
-			return r1 != null && r1.Equals(r2);
-		}
-
-		/// <param name="r1">R1.</param>
-		/// <param name="r2">R2.</param>
-		public static bool operator !=(Rectangle r1, Rectangle r2)
-		{
-			return r1 != null && !r1.Equals(r2);
-		}
 
 		/// <summary>
 		/// Serves as a hash function for a <see cref="Pulsar.Rectangle"/> object.

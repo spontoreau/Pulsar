@@ -114,20 +114,6 @@ namespace Pulsar
 			return new Vector(v.X / value, v.Y / value);
 		}
 
-		/// <param name="v1">V1.</param>
-		/// <param name="v2">V2.</param>
-		public static bool operator ==(Vector v1, Vector v2)
-		{
-			return v1 != null && v1.Equals(v2);
-		}
-
-		/// <param name="v1">V1.</param>
-		/// <param name="v2">V2.</param>
-		public static bool operator !=(Vector v1, Vector v2)
-		{
-			return v1 != null && !v1.Equals(v2);
-		}
-
 		/// <summary>
 		/// Clamp the specified vector.
 		/// </summary>
