@@ -39,7 +39,7 @@ namespace Pulsar.Services.Implements.Graphics
 			if (!HasBegin)
 				throw new Exception ("SpriteBatch not start");
 
-			var tr = _sprite.TextureRect;
+			/*var tr = _sprite.TextureRect;
 			if (source != null) {
 				tr.Left = (int)source.X;
 				tr.Top = (int)source.Y;
@@ -53,13 +53,13 @@ namespace Pulsar.Services.Implements.Graphics
 				tr.Width = (int)texture.Size.X;
 				tr.Height = (int)texture.Size.Y;
 			}
-			_sprite.TextureRect = tr;
+			_sprite.TextureRect = tr;*/
 
 	        _sprite.Texture = texture;
 
 	        var position = _sprite.Position;
 	        position.X = destination.Position.X;
-	        position.Y = destination.Position.X;
+			position.Y = destination.Position.Y;
 	        _sprite.Position = position;
 
 	        var c = _sprite.Color;
@@ -100,7 +100,7 @@ namespace Pulsar.Services.Implements.Graphics
 				throw new Exception ("SpriteBatch not start");
 
 			//TODO TextureRect seems not work with Mono on OSX, sound boring...
-			var tr = _sprite.TextureRect;
+			/*var tr = _sprite.TextureRect;
 			if (source != null) {
 				tr.Left = (int)source.X;
 				tr.Top = (int)source.Y;
@@ -114,13 +114,13 @@ namespace Pulsar.Services.Implements.Graphics
 				tr.Width = (int)texture.Size.X;
 				tr.Height = (int)texture.Size.Y;
 			}
-			_sprite.TextureRect = tr;
+			_sprite.TextureRect = tr;*/
 
 	        _sprite.Texture = texture;
 
 	        var p = _sprite.Position;
 	        p.X = position.X;
-	        p.Y = position.X;
+			p.Y = position.Y;
 	        _sprite.Position = p;
 
 	        var c = _sprite.Color;

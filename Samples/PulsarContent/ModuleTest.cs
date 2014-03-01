@@ -12,6 +12,7 @@ namespace PulsarContent
 	public class ModuleTest : IModule, IDrawable
 	{
 		private Texture texture;
+		private Vector position;
 
 		/// <summary>
 		/// Gets or sets the content service.
@@ -46,11 +47,17 @@ namespace PulsarContent
 			ContentService.RootDirectory = "Content";
 			ContentService.LazyLoading = true;
 			texture = ContentService.Load<Texture> ("Test/vtek");
+			position = Vector.Zero;
 
 			if (!WindowService.IsCreated)
 				throw new Exception ("Window must be created");
 
 			SpriteBatchService.RenderTarget = WindowService.Window;
+
+			WindowService.Window.MouseMoved += (object sender, SFML.Window.MouseMoveEventArgs e) => {
+				position.X = e.X; 
+				position.Y = e.Y;
+			};
 		}
 
 		/// <summary>
@@ -59,8 +66,10 @@ namespace PulsarContent
 		/// <param name="gameTime">Game time.</param>
 		public void Update (GameTime gameTime)
 		{
-			var tmp = this.TempData();
-			var glb = this.GlobalData();
+			//var tmp = this.TempData();
+			//var glb = this.GlobalData();
+
+
 		}
 
 		/// <summary>
@@ -70,7 +79,7 @@ namespace PulsarContent
 		public void Draw (GameTime gameTime)
 		{
 			SpriteBatchService.Begin ();
-			SpriteBatchService.Draw (texture, Vector.Zero, Pulsar.Color.White);
+			SpriteBatchService.Draw (texture, position, Pulsar.Color.White);
 			SpriteBatchService.End ();
 		}
 	}
