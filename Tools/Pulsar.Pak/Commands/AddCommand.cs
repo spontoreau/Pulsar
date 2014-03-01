@@ -1,13 +1,14 @@
 ﻿using System;
 using System.IO;
 using SFML.Graphics;
+using SFML.Audio;
 
 namespace Pulsar.Pak
 {
 	/// <summary>
 	/// Add command.
 	/// </summary>
-	public class AddCommand : ICommand
+	public class AddCommand : AbstractCommand
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Pulsar.Pak.AddCommand"/> class.
@@ -20,32 +21,21 @@ namespace Pulsar.Pak
 		/// Execute the specified args.
 		/// </summary>
 		/// <param name="args">Arguments.</param>
-		public void Execute (string[] args)
+		public override void Execute (string[] args)
 		{
 			if (args.Length != 3) 
 			{
-				Console.WriteLine ("arguments unvalid number");
-				Console.WriteLine ();
-				Process.Handle (new string[1] { "HELP" });
+				Console.WriteLine ("arguments unvalid number :");
+				Process.Handle (new string[2] { "HELP", Name });
 				return;
 			}
 
-			var resPath = args [0];
-
+			var resPath = args[0];
 
 			if (!File.Exists (resPath)) 
 			{
 				Console.WriteLine ("Resource file not exists");
-				Console.WriteLine ();
-				Process.Handle (new string[1] { "HELP" });
 				return;
-			}
-
-			if (!(resPath.Contains (".png") || resPath.Contains ("jpg") || resPath.Contains ("bmp"))) 
-			{
-				Console.WriteLine ("Unsupport file type");
-				Console.WriteLine ();
-				Process.Handle (new string[1] { "HELP" });
 			}
 
 			var resKey = args [1];
@@ -62,30 +52,45 @@ namespace Pulsar.Pak
 			{
 				pak = new Package(pakName);
 			}
+				
+			var isAdded = false;
+			var extensions = Path.GetExtension (resPath).ToLower();
 
-			var isAdded = pak.Add (typeof(Texture), resKey, resPath);
+			if (extensions == ".png" || extensions == ".jpg" || extensions == ".bmp") 
+			{
+				isAdded = pak.Add (typeof(Texture), resKey, resPath);
+
+			} 
+			else if (extensions == "ttf" || extensions == "otf") 
+			{
+				isAdded = pak.Add (typeof(Font), resKey, resPath);
+			} 
+			else if (extensions == "wav") 
+			{
+				isAdded = pak.Add (typeof(SoundBuffer), resKey, resPath);
+			} 
+			else 
+			{
+				Console.WriteLine (string.Format("Unsupport file type : {0}", resPath));
+				return;
+			}
 
 			if (isAdded) 
 			{
 				Package.Save (pak, "output/");
 				Console.WriteLine ("Resource {0} added to pak {1}", resPath, pakPath);
-			} else 
+			} 
+			else 
 			{
 				Console.WriteLine ("Key {0} is define in pak {1}", resKey, pakPath);
 			}
 		}
 
 		/// <summary>
-		/// Gets or sets the process.
-		/// </summary>
-		/// <value>The process.</value>
-		public CommandProcess Process { get; set;}
-
-		/// <summary>
 		/// Gets the name.
 		/// </summary>
 		/// <value>The name.</value>
-		public string Name 
+		public override string Name 
 		{
 			get 
 			{
@@ -97,7 +102,7 @@ namespace Pulsar.Pak
 		/// Gets the description.
 		/// </summary>
 		/// <value>The description.</value>
-		public string Description 
+		public override string Description 
 		{
 			get 
 			{

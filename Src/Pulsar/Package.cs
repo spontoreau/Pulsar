@@ -41,7 +41,7 @@ namespace Pulsar
 		/// Gets or sets the items.
 		/// </summary>
 		/// <value>The items.</value>
-		internal List<PackageItem> Items { get; set; }
+		public List<PackageItem> Items { get; set; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Pulsar.Content.Package"/> class.
