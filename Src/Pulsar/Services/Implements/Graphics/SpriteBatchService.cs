@@ -3,6 +3,7 @@ using SFML.Graphics;
 using SFML.Window;
 using Pulsar.Helpers;
 using Pulsar.Services;
+using SfmlColor = SFML.Graphics.Color;
 
 namespace Pulsar.Services.Implements.Graphics
 {
@@ -15,6 +16,12 @@ namespace Pulsar.Services.Implements.Graphics
 		/// The _sprite.
 		/// </summary>
 		private readonly Sprite _sprite = new Sprite();
+
+		private Vector2f _position = new Vector2f(0,0);
+		private Vector2f _origin = new Vector2f(0,0);
+		private Vector2f _scale = new Vector2f(0,0);
+		private SfmlColor _color = SfmlColor.White;
+		private IntRect _source = new IntRect(0, 0, 0, 0);
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Pulsar.Graphics.SpriteBatch"/> class.
@@ -39,47 +46,43 @@ namespace Pulsar.Services.Implements.Graphics
 			if (!HasBegin)
 				throw new Exception ("SpriteBatch not start");
 
-			/*var tr = _sprite.TextureRect;
-			if (source != null) {
-				tr.Left = (int)source.X;
-				tr.Top = (int)source.Y;
-				tr.Width = (int)source.Width;
-				tr.Height = (int)source.Height;
+			if (source != null) 
+			{
+				_source.Left = (int)source.X;
+				_source.Top = (int)source.Y;
+				_source.Width = (int)source.Width;
+				_source.Height = (int)source.Height;
 			} 
 			else 
 			{
-				tr.Left = 0;
-				tr.Top = 0;
-				tr.Width = (int)texture.Size.X;
-				tr.Height = (int)texture.Size.Y;
+				_source.Left = 0;
+				_source.Top = 0;
+				_source.Width = (int)texture.Size.X;
+				_source.Height = (int)texture.Size.Y;
 			}
-			_sprite.TextureRect = tr;*/
+			_sprite.TextureRect = _source;
 
 	        _sprite.Texture = texture;
 
-	        var position = _sprite.Position;
-	        position.X = destination.Position.X;
-			position.Y = destination.Position.Y;
-	        _sprite.Position = position;
+			_position.X = destination.Position.X;
+			_position.Y = destination.Position.Y;
+			_sprite.Position = _position;
 
-	        var c = _sprite.Color;
-	        c.A = color.A;
-	        c.B = color.B;
-	        c.G = color.G;
-	        c.R = color.R;
-	        _sprite.Color = c;
+			_color.A = color.A;
+			_color.B = color.B;
+			_color.G = color.G;
+			_color.R = color.R;
+			_sprite.Color = _color;
 
-			_sprite.Rotation = MathHelper.ToDegrees(rotation);
+			_sprite.Rotation = rotation;
 
-	        var o = _sprite.Origin;
-	        o.X = origin.X;
-	        o.Y = origin.Y;
-	        _sprite.Origin = o;
+			_origin.X = origin.X;
+			_origin.Y = origin.Y;
+			_sprite.Origin = _origin;
 
-			var s = _sprite.Scale;
-			s.X = destination.Width/_sprite.TextureRect.Width;
-			s.Y = destination.Height / _sprite.TextureRect.Height;
-			_sprite.Scale = s;
+			_scale.X = destination.Width/_source.Width;
+			_scale.Y = destination.Height/_source.Height;
+			_sprite.Scale = _scale;
 
 	        RenderTarget.Draw(_sprite);
 		}
@@ -99,49 +102,44 @@ namespace Pulsar.Services.Implements.Graphics
 			if (!HasBegin)
 				throw new Exception ("SpriteBatch not start");
 
-			//TODO TextureRect seems not work with Mono on OSX, sound boring...
-			/*var tr = _sprite.TextureRect;
-			if (source != null) {
-				tr.Left = (int)source.X;
-				tr.Top = (int)source.Y;
-				tr.Width = (int)source.Width;
-				tr.Height = (int)source.Height;
+			if (source != null) 
+			{
+				_source.Left = (int)source.X;
+				_source.Top = (int)source.Y;
+				_source.Width = (int)source.Width;
+				_source.Height = (int)source.Height;
 			}
 			else 
 			{
-				tr.Left = 0;
-				tr.Top = 0;
-				tr.Width = (int)texture.Size.X;
-				tr.Height = (int)texture.Size.Y;
+				_source.Left = 0;
+				_source.Top = 0;
+				_source.Width = (int)texture.Size.X;
+				_source.Height = (int)texture.Size.Y;
 			}
-			_sprite.TextureRect = tr;*/
+			_sprite.TextureRect = _source;
 
 	        _sprite.Texture = texture;
 
-	        var p = _sprite.Position;
-	        p.X = position.X;
-			p.Y = position.Y;
-	        _sprite.Position = p;
+			_position.X = position.X;
+			_position.Y = position.Y;
+			_sprite.Position = _position;
 
-	        var c = _sprite.Color;
-	        c.A = color.A;
-	        c.B = color.B;
-	        c.G = color.G;
-	        c.R = color.R;
-	        _sprite.Color = c;
+			_color.A = color.A;
+			_color.B = color.B;
+			_color.G = color.G;
+			_color.R = color.R;
+			_sprite.Color = _color;
 
-	        _sprite.Rotation = MathHelper.ToDegrees(rotation);
+	        _sprite.Rotation = rotation;
 
-	        var o = _sprite.Origin;
-	        o.X = origin.X;
-	        o.Y = origin.Y;
-	        _sprite.Origin = o;
+			_origin.X = origin.X;
+			_origin.Y = origin.Y;
+			_sprite.Origin = _origin;
 
-			var s = _sprite.Scale;
-			s.X = scale;
-			s.Y = scale;
 
-			_sprite.Scale = s;
+			_scale.X = scale;
+			_scale.Y = scale;
+			_sprite.Scale = _scale;
 
 	        RenderTarget.Draw(_sprite);
 		}
