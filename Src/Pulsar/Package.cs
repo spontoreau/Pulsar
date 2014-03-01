@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -16,7 +17,7 @@ namespace Pulsar
 		/// <summary>
 		/// The package file extension.
 		/// </summary>
-		private const string PackageFileExtension = ".ppk";
+		public const string PackageFileExtension = ".ppk";
 
 		/// <summary>
 		/// Gets the name.
@@ -53,6 +54,7 @@ namespace Pulsar
 			if (!regex.IsMatch (name))
 				throw new ArgumentException ("Invalid name");
 
+			Name = name;
 			Items = new List<PackageItem> ();
 		}
 			
@@ -62,9 +64,13 @@ namespace Pulsar
 		/// <param name="type">Type.</param>
 		/// <param name="key">Key.</param>
 		/// <param name="assetFile">Asset file.</param>
-		public void Add(Type type, string key, string assetFile)
+		public bool Add(Type type, string key, string assetFile)
 		{
+			if (Items.Any (x => x.Key == key))
+				return false;
+
 			Items.Add(new PackageItem (type, key, assetFile));
+			return true;
 		}
 
 		/// <summary>

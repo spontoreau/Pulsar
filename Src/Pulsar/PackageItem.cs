@@ -13,7 +13,13 @@ namespace Pulsar
 		/// Gets or sets the key.
 		/// </summary>
 		/// <value>The key.</value>
-		public string Key { get; set; }
+		public string Key { get; private set; }
+
+		/// <summary>
+		/// Gets the name of the file.
+		/// </summary>
+		/// <value>The name of the file.</value>
+		public string FileName { get; private set;}
 
 		/// <summary>
 		/// Gets the type.
@@ -37,6 +43,7 @@ namespace Pulsar
 		{
 			Type = type;
 			Key = key;
+			FileName = Path.GetFileName (assetName);
 			ByteArray = File.ReadAllBytes(assetName);
 		}
 	}
