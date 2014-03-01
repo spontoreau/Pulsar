@@ -45,7 +45,10 @@ namespace Pulsar.Services.Implements.Content.Resolvers
 		/// <param name="assetFileName">Asset file name.</param>
 		protected internal override object Load(string assetFile)
 		{
-			return new Texture (assetFile);
+			return new Texture (assetFile)
+				{
+					Smooth = true
+				};
 		}
 
 		/// <summary>
