@@ -33,7 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="Ninject">
-      <HintPath>..\..\Ninject\Mono\Ninject.dll</HintPath>
+      <HintPath>..\..\ExtLibs\Ninject\Ninject.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +76,5 @@
     <None Include="Content\Test\vtek.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
 </Project>

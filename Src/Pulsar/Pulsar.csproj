@@ -34,7 +34,7 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="Ninject">
-      <HintPath>..\..\packages\Ninject.3.0.1.10\lib\net40\Ninject.dll</HintPath>
+      <HintPath>..\..\ExtLibs\Ninject\Ninject.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -102,8 +102,5 @@
       <Project>{D17DE83D-A592-461F-8AF2-53F9E22E1D0F}</Project>
       <Name>sfml-window</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
 </Project>
