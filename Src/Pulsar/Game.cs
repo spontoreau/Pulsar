@@ -8,6 +8,7 @@ using Pulsar.Module;
 using Pulsar.Services;
 using Pulsar.Services.Implements.Content;
 using Pulsar.Services.Implements.Graphics;
+using SFML.Graphics;
 
 namespace Pulsar
 {
@@ -102,6 +103,16 @@ namespace Pulsar
 				WindowService.Window.SetMouseCursorVisible(value);
 			}
 		}
+		
+		/// <summary>
+		/// The global data.
+		/// </summary>
+		private static GameData GlobalData { get; set; }
+
+		/// <summary>
+		/// The temp data.
+		/// </summary>
+		private static GameData TempData { get; set; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Pulsar.Game"/> class.
@@ -109,6 +120,10 @@ namespace Pulsar
 		public Game()
 		{
 			GameTime = new GameTime();
+
+			GlobalData = new GameData();
+			TempData = new GameData();
+
 			Modules = new List<IModule>();
 			Drawables = new List<IDrawable>();
 		}
@@ -124,7 +139,7 @@ namespace Pulsar
 			if(IsRunning)
 				throw new InvalidOperationException("Game is running");
 
-			PulsarHost.Instance.Kernel.Bind<TInterface> ().To<TImplements>().InSingletonScope();
+			PulsarHost.Instance.Kernel.Bind<TInterface>().To<TImplements>().InSingletonScope();
 
 			return this;
 		}
@@ -153,10 +168,17 @@ namespace Pulsar
 
 			var module = PulsarHost.Instance.Kernel.GetService(typeof(T));
 
-			var wasAdded = Modules.Any (x => x.GetType ().IsInstanceOfType (module));
+			var wasAdded = Modules.Any (x => x.GetType().IsInstanceOfType(module));
 
 			if(wasAdded)
 				throw new InvalidOperationException(string.Format("Module {0} already added", module.GetType()));
+
+			if (module is GameModule) 
+			{
+				var gm = (GameModule)module;
+				gm.GlobalData = GlobalData;
+				gm.TempData = GlobalData;
+			}
 
 			Modules.Add ((IModule)module);
 
@@ -198,6 +220,8 @@ namespace Pulsar
 			if (!WindowService.IsCreated)
 				WindowService.Create();
 
+			//WindowService.Window.SetView(new View(new FloatRect(0, 0, 1280, 720)));//TODO change this line when camera manager will be ready and contain a camera for the virtual resolution
+
 			Initialize();
 
 		    IsRunning = true; 
@@ -207,7 +231,7 @@ namespace Pulsar
 		        Tick();
 		    }
 
-			Environment.Exit(1);//Allways exit the application
+			//Environment.Exit(1);//Allways exit the application
 		}
 
 		/// <summary>
@@ -230,8 +254,7 @@ namespace Pulsar
 
 			if (WindowService.IsCreated)
 				WindowService.Window.DispatchEvents();
-
-
+				
 			Update(GameTime);
 			Draw(GameTime);
 
@@ -245,7 +268,7 @@ namespace Pulsar
 		/// <param name="gameTime">Game time.</param>
 		private void Update(GameTime gameTime)
 		{
-			this.TempData().Clear();
+			TempData.Clear();
 
 			foreach (var m in Modules)
 				m.Update (gameTime);
@@ -256,12 +279,9 @@ namespace Pulsar
 		/// </summary>
 		private void Initialize()
 		{
-			this.InitGlobalData();
-			this.InitTempData();
-
 			Watch = new Stopwatch();
 
-			foreach (var m in Modules)
+			foreach (var m in Modules) 
 				m.Initialize();
 		}
 

@@ -19,6 +19,7 @@ namespace PulsarContent
 				.AddService<ITextBatchService, TextBatchService>()
 				.AddService<IContentService, ContentService>()
 				.AddService<IWindowService, WindowService>()
+				.AddModule<FpsModule>()
 				.AddModule<ModuleTest>()
 				.Run();
 		}

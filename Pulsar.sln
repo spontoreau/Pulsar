@@ -127,6 +127,6 @@ Global
 		{91B134E9-652F-4663-98B3-D0DDB7D8D9ED} = {E693BAA4-4EB3-49DB-BEF9-367F56FFCA2D}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Tools\Pulsar.Pak\Pulsar.Pak.csproj
+		StartupItem = Samples\PulsarContent\PulsarContent.csproj
 	EndGlobalSection
 EndGlobal

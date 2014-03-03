@@ -40,6 +40,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ModuleTest.cs" />
+    <Compile Include="FpsModule.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -63,12 +64,16 @@
   <ItemGroup>
     <Folder Include="Content\" />
     <Folder Include="Content\Test\" />
+    <Folder Include="Content\Font\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\pulsar.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\pulsar_w.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Font\OpenSans.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
